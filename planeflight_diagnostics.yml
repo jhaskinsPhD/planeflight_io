@@ -1,0 +1,244 @@
+aer_uptake:
+  Collection: Aerosol Uptake Diagnostics
+  Diagnostics:
+    GAMM_DHDN:
+      FULLNAME: Uptake coefficient for DHDN
+      UNITS: unitless
+    GAMM_EPOX:
+      FULLNAME: Uptake coefficient for EPOX
+      UNITS: unitless
+    GAMM_GLYX:
+      FULLNAME: Uptake coefficient for GLYX
+      UNITS: unitless
+    GAMM_IMAE:
+      FULLNAME: Uptake coefficient for IMAE
+      UNITS: unitless
+    GAMM_ISOPN:
+      FULLNAME: Uptake coefficient for ISOPN
+      UNITS: unitless
+  Notes: Untested diagnostics. Will not work w/ v<12.8.0 prior to Bates et al.,2019
+    Isoprene Chemistry updates.
+aodb:
+  Collection: Column Aerosol Optical Depth (below aircraft) Diagonstics
+  Diagnostics:
+    AODB_BLKC:
+      FULLNAME: Column aerosol optical depth for black carbon *below aircraft*
+      UNITS: unitless
+    AODB_DUST:
+      FULLNAME: Column aerosol optical depth for dust *below aircraft*
+      UNITS: unitless
+    AODB_ORGC:
+      FULLNAME: Column aerosol optical depth for organic carbon *below aircraft*
+      UNITS: unitless
+    AODB_SALA:
+      FULLNAME: Column aerosol optical depth for accumulation mode sea salt *below aircraft*
+      UNITS: unitless
+    AODB_SALC:
+      FULLNAME: Column aerosol optical depth for coarse mode sea salt *below aircraft*
+      UNITS: unitless
+    AODB_SULF:
+      FULLNAME: Column aerosol optical depth for sulfate *below aircraft*
+      UNITS: unitless
+    AODB_TOT:
+      FULLNAME: Column aerosol optical depth for all aerosols *below aircraft*
+      UNITS: unitless
+aodc:
+  Collection: Column Aerosol Optical Depth Diagonstics
+  Diagnostics:
+    AODC_BLKC:
+      FULLNAME: Column aerosol optical depth for black carbon
+      UNITS: unitless
+    AODC_DUST:
+      FULLNAME: Column aerosol optical depth for dust
+      UNITS: unitless
+    AODC_ORGC:
+      FULLNAME: Column aerosol optical depth for organic carbon
+      UNITS: unitless
+    AODC_SALA:
+      FULLNAME: Column aerosol optical depth for accumulation mode sea salt
+      UNITS: unitless
+    AODC_SALC:
+      FULLNAME: Column aerosol optical depth for coarse mode sea salt
+      UNITS: unitless
+    AODC_SULF:
+      FULLNAME: Column aerosol optical depth for sulfate
+      UNITS: unitless
+    AODC_TOT:
+      FULLNAME: Column aerosol optical depth for all aerosol types
+      UNITS: unitless
+aq_aer:
+  Collection: Aqueous Aerosol Diagnostics
+  Diagnostics:
+    AQAER_RAD:
+      FULLNAME: Aqueous aerosol radius
+      UNITS: cm
+    AQAER_SURF:
+      FULLNAME: Aqueous aerosol surface area
+      UNITS: cm2/cm3
+broken:
+  Collection: Production Rates / Reaction Rates
+  Diagnostics:
+    PROD_xxxx:
+      FULLNAME: 'Production Rate of Reaction # xxxx'
+      UNITS: molec/cm3/s
+    REA_nnn:
+      FULLNAME: 'Rate of Reaction # xxxx'
+      UNITS: molec/cm3/s
+  Notes: THESE DIAGNOSTICS DO NOT CURRENTLY WORK. GEOS-CHEM SOURCE CODE NEEDS UPDATING.
+chem_fams:
+  Collection: Chemical Family Diagnostics
+  Diagnostics:
+    AN:
+      FULLNAME: Concentration of AN family
+      UNITS: mol/mol
+    NOy:
+      FULLNAME: Concentration of NOy family
+      UNITS: mol/mol
+    RO2:
+      FULLNAME: Concentration of RO2 family
+      UNITS: mol/mol
+defaults:
+  Collection: Default Diagnostics
+  Diagnostics:
+    GMAO_IIEV:
+      FULLNAME: GEOS-Chem grid box Longitude index
+      UNITS: unitless
+    GMAO_JJEV:
+      FULLNAME: GEOS-Chem grid box Latitude index
+      UNITS: unitless
+    GMAO_LLEV:
+      FULLNAME: GEOS-Chem grid box index Level index
+      UNITS: unitless
+    GMAO_PRES:
+      FULLNAME: Pressure at center of grid box
+      UNITS: hPa
+    GMAO_RELH:
+      FULLNAME: Relative humidity
+      UNITS: '%'
+    GMAO_TEMP:
+      FULLNAME: Temperature
+      UNITS: K
+  Notes: Diagnostics in this collection are included by default in all files generated
+    using this function.
+gmao_ice:
+  Collection: GMAO Grid Box Ice Fraction Diagnostics
+  Diagnostics:
+    GMAO_ICE00:
+      FULLNAME: Fraction of each grid box that has 0% to +10% of sea ice coverage
+      UNITS: unitless
+    GMAO_ICE10:
+      FULLNAME: Fraction of each grid box that has 10% to +20% of sea ice coverage
+      UNITS: unitless
+    GMAO_ICE20:
+      FULLNAME: Fraction of each grid box that has 20% to +30% of sea ice coverage
+      UNITS: unitless
+    GMAO_ICE30:
+      FULLNAME: Fraction of each grid box that has 30% to +40% of sea ice coverage
+      UNITS: unitless
+    GMAO_ICE40:
+      FULLNAME: Fraction of each grid box that has 40% to +50% of sea ice coverage
+      UNITS: unitless
+    GMAO_ICE50:
+      FULLNAME: Fraction of each grid box that has 50% to +60% of sea ice coverage
+      UNITS: unitless
+    GMAO_ICE60:
+      FULLNAME: Fraction of each grid box that has 60% to +70% of sea ice coverage
+      UNITS: unitless
+    GMAO_ICE70:
+      FULLNAME: Fraction of each grid box that has 70% to +80% of sea ice coverage
+      UNITS: unitless
+    GMAO_ICE80:
+      FULLNAME: Fraction of each grid box that has 80% to +90% of sea ice coverage
+      UNITS: unitless
+    GMAO_ICE90:
+      FULLNAME: Fraction of each grid box that has 90% to +100% of sea ice coverage
+      UNITS: unitless
+gmao_met:
+  Collection: GMAO Meterology Diagnostics
+  Diagnostics:
+    GMAO_ABSH:
+      FULLNAME: Absolute humidity
+      UNITS: unitless
+    GMAO_PSFC:
+      FULLNAME: Surface pressure
+      UNITS: hPa
+    GMAO_PSLV:
+      FULLNAME: Sea level pressure
+      UNITS: hPa
+    GMAO_SURF:
+      FULLNAME: Aerosol surface area
+      UNITS: cm2/cm3
+    GMAO_THTA:
+      FULLNAME: Potential temperature
+      UNITS: K
+    GMAO_UWND:
+      FULLNAME: Zonal winds
+      UNITS: m/s
+    GMAO_VWND:
+      FULLNAME: Meridional winds
+      UNITS: m/s
+    TIME_LT:
+      FULLNAME: Local time
+      UNITS: fractional hours
+hg:
+  Collection: Mercury Diagnostics
+  Diagnostics:
+    HG2_FRACG:
+      FULLNAME: Fraction of Hg(II) in the gas phase
+      UNITS: unitless
+    HG2_FRACP:
+      FULLNAME: Fraction of Hg(II) in the particle phase
+      UNITS: unitless
+  Notes: Untested diagnostics. Will ONLY work with Hg simulations (not in fullchem)!
+htep:
+  Collection: ISORROPIA/HTEP Diagnostics
+  Diagnostics:
+    ISOR_AH2O:
+      FULLNAME: ISORROPIA/HTEP aerosol water
+      UNITS: ug/m3 (air)
+    ISOR_HPLUS:
+      FULLNAME: ISORROPIA/HTEP aerosol [H+]
+      UNITS: M
+    ISOR_HSO4:
+      FULLNAME: ISORROPIA/HTEP bifulfate
+      UNITS: M
+    ISOR_PH:
+      FULLNAME: 'ISORROPIA/HTEP pH (Note: In a non-ideal system, pH can be negative!)'
+      UNITS: unitless
+std_output: 
+    Collection: Standard plane.log Outputs
+    Diagnostics: 
+        POINT: 
+            FULLNAME: A sequential index of flight track points.
+            UNITS: unitless
+        TYPE:
+            FULLNAME: Identifier for the plane (or station). Same as input. 
+            Types_Assuming_Alt: ['Aacg','Aabne','Acar','Acma','Acrv','Adnd','Aesp','Aetl','Ahil','Ahip','Alef','Anha','Apfa','Arta','Asca','Asgp','Atgc','Athd','Awbi','Tbao','Tamt', 'Tcrb','Tlef', 'Tlew','Tmbo','Tmvy','Tmwo','Tnwr','Tsct','Tsgp','Tstr','Twbi','Twgc','Twkt','S']
+            Types_Assuming_Press: Any type not in list "Types_Assuming_Alt" that also does NOT begin with "S" (always assumed alt) 
+            UNITS: unitless
+        YYYYMMDD:
+            FULLNAME: Year, Month, and Day of the observation (UTC)
+            UNITS: Date in UTC time
+        HHMM:
+            FULLNAME: Hour and Minute of the observation (UTC)
+            UNITS: UTC Time
+        LAT:
+            FULLNAME: Latitude, range -90 to +90
+            UNITS: degrees
+        LON:
+            FULLNAME: Longitude, range -180 to +180
+            UNITS: degrees 
+        ALT/PRE: 
+            FULLNAME: Altitude [m] or Pressure [hPa] of the observation
+            UNITS: Assigned based on TYPE
+        OBS:
+            FULLNAME: Value of the observation (if known), used to compare to model output
+            UNITS: Same as entered in input file.
+tomas:
+  Collection: TOMAS Diagnostics
+  Diagnostics:
+    TMS_nnn:
+      FULLNAME: Nucleation rates (TOMAS)
+      UNITS: No units listed on readthedocs...
+  Notes: Untested diagnostics. If you want these, you'll need to add your own TMS_nnn's
+    manually!
