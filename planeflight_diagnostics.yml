@@ -115,9 +115,15 @@ defaults:
     GMAO_RELH:
       FULLNAME: Relative humidity
       UNITS: '%'
+    GMAO_AVGW:
+      FULLNAME: Water vapor mixing ratio
+      UNITS: mol/mol
     GMAO_TEMP:
       FULLNAME: Temperature
       UNITS: K
+    TIME_LT:
+      FULLNAME: Local time
+      UNITS: fractional hours
   Notes: Diagnostics in this collection are included by default in all files generated
     using this function.
 gmao_ice:
@@ -177,9 +183,6 @@ gmao_met:
     GMAO_VWND:
       FULLNAME: Meridional winds
       UNITS: m/s
-    TIME_LT:
-      FULLNAME: Local time
-      UNITS: fractional hours
 hg:
   Collection: Mercury Diagnostics
   Diagnostics:
@@ -209,10 +212,10 @@ std_output:
     Collection: Standard plane.log Outputs
     Diagnostics: 
         POINT: 
-            FULLNAME: A sequential index of flight track points.
-            UNITS: unitless
+            FULLNAME: Flight track data point number (for reference)
+            UNITS: unitless index
         TYPE:
-            FULLNAME: Identifier for the plane (or station). Same as input. 
+            FULLNAME: Aircraft/flight number ID or ground station ID. Same as input. 
             Types_Assuming_Alt: ['Aacg','Aabne','Acar','Acma','Acrv','Adnd','Aesp','Aetl','Ahil','Ahip','Alef','Anha','Apfa','Arta','Asca','Asgp','Atgc','Athd','Awbi','Tbao','Tamt', 'Tcrb','Tlef', 'Tlew','Tmbo','Tmvy','Tmwo','Tnwr','Tsct','Tsgp','Tstr','Twbi','Twgc','Twkt','S']
             Types_Assuming_Press: Any type not in list "Types_Assuming_Alt" that also does NOT begin with "S" (always assumed alt) 
             UNITS: unitless
@@ -220,20 +223,35 @@ std_output:
             FULLNAME: Year, Month, and Day of the observation (UTC)
             UNITS: Date in UTC time
         HHMM:
-            FULLNAME: Hour and Minute of the observation (UTC)
+            FULLNAME: Hour and minute (UTC) for each flight track point
             UNITS: UTC Time
         LAT:
-            FULLNAME: Latitude, range -90 to +90
+            FULLNAME: Latitude (-90 to 90 degrees) for each flight track point
             UNITS: degrees
         LON:
-            FULLNAME: Longitude, range -180 to +180
+            FULLNAME: Longitude (-180 to 180 degrees) for each flight track point
             UNITS: degrees 
-        ALT/PRE: 
-            FULLNAME: Altitude [m] or Pressure [hPa] of the observation
-            UNITS: Assigned based on TYPE
+        ALT: 
+            FULLNAME: Altitude [m] of the observation for each flight track point (if alt inputted as TYPE)
+            UNITS: m
+        PRESS: 
+            FULLNAME: Pressure in hPa for each flight track point
+            UNITS: hPa
         OBS:
-            FULLNAME: Value of the observation (if known), used to compare to model output
+            FULLNAME: Observation value from the flight campaign
             UNITS: Same as entered in input file.
+        T_IND:
+            FULLNAME: Time index of output
+            UNITS: Unitless index
+        P_I:
+            FULLNAME: GEOS-Chem level index
+            UNITS: Unitless index
+        I_IND:
+            FULLNAME: GEOS-Chem longitude index
+            UNITS: Unitless index
+        J_IND:
+            FULLNAME: GEOS-Chem latitude index
+            UNITS: Unitless index
 tomas:
   Collection: TOMAS Diagnostics
   Diagnostics:
