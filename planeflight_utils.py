@@ -773,6 +773,6 @@ def _save_outputs(df:pd.core.frame.DataFrame, info_dict:dict, savefile:str,
         
         # Print  output file path to screen & return ds
         print('Concatenated plane.log data saved as xarray dataset with'+\
-              'metadata attrs at: \n\t'+savefile+'.nc')
+              ' metadata attrs at: \n\t'+savefile+'.nc')
         
         return ds 

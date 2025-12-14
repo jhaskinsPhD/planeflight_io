@@ -13,6 +13,7 @@ import os
 import sys
 import numpy as np
 import pandas as pd 
+import xarray as xr
 from datetime import datetime
 from planeflight_utils import (_check_simtype, _read_planeflight_diags_yml,_display_diags,
                                _parse_gc_config, _check_str_arr_inputs,_read_planelog_to_df,
@@ -25,6 +26,74 @@ from planeflight_utils import (_check_simtype, _read_planeflight_diags_yml,_disp
 ###############################################################################
 #  Functions for creating input plane.dat files for GEOS-Chem simulations
 ###############################################################################
+def remove_nan_rows(*arrays):
+    """Function to remove rows containing NaN values from multiple data collections, 
+    while maintaining their original types. Provided to help clean campaign data
+    inputs for lat/long/time/pressure. Will not change datatype from input type.  
+
+    INPUT:
+    ------
+    arrays : Variable number of collections (such as lists, numpy arrays, or pandas Series) 
+             or xarray.DataArray that need to be processed for NaN removal. 
+             The function accepts:
+               - list
+               - numpy.ndarray
+               - pandas.Series
+               - pandas.Timestamp
+               - xarray.DataArray
+
+    OUTPUT:
+    -------
+    cleaned_arrays : tuple
+        A tuple containing the cleaned collections. Each element has the same 
+        data type as its corresponding input, with all rows removed where any 
+        input collection had a NaN.
+
+    BEHAVIOR:
+    ---------
+
+    1. Converts each data collection to a pandas DataFrame to handle NaNs effectively.
+    2. Removes any rows from this DataFrame where any column contains NaN, ensuring that
+       all correlated data across the collections is consistent.
+    3. Converts the DataFrame back into the original data type and format for each input
+       before returning, thus preserving the type integrity of the inputs.
+    """
+    # Determine input types and convert inputs to a DataFrame
+    input_types = []
+    data_dict = {}
+
+    for i, array in enumerate(arrays):
+        input_types.append(type(array))
+        
+        if isinstance(array, (list, np.ndarray, pd.Series)):
+            data_dict[f'col{i}'] = pd.Series(array)
+        elif isinstance(array, xr.DataArray):
+            data_dict[f'col{i}'] = array.to_series()
+        elif isinstance(array, Timestamp):
+            data_dict[f'col{i}'] = pd.Series([pd.Timestamp(array) if not pd.isnull(array) else pd.NaT for _ in range(len(arrays[0]))])
+        else:
+            raise ValueError(f"Unsupported data type: {type(array)}")
+
+    df = pd.DataFrame(data_dict)
+
+    # Drop rows with any NaN values
+    df_cleaned = df.dropna()
+    
+    # Convert back to the original input types
+    cleaned_data = []
+    for i, typ in enumerate(input_types):
+        if typ == list:
+            cleaned_data.append(df_cleaned[f'col{i}'].tolist())
+        elif typ == np.ndarray:
+            cleaned_data.append(df_cleaned[f'col{i}'].to_numpy())
+        elif typ == pd.Series:
+            cleaned_data.append(pd.Series(df_cleaned[f'col{i}'].to_list()))
+        elif typ == xr.DataArray:
+            cleaned_series = df_cleaned[f'col{i}'].to_series()
+            cleaned_data.append(xr.DataArray(cleaned_series.values, dims=array.dims))
+
+    return tuple(cleaned_data)
+
 
 def get_compatible_input_diags(simtype:str='',these_collections:list=[],
                                    display:bool=False): 
@@ -255,22 +324,22 @@ def make_planeflight_inputs(savedir: str,
         raise ValueError('Input "vert_arr" contains np.nan or np.inf.').with_traceback(sys.exc_info()[2])
         
     # Check that all lats are in range -90 to 90 or raise error: 
-    if any(abs(lat_arr)> 90):
+    if np.any(np.abs(lat_arr) > 90):
         raise ValueError('Some |Latitudes| are > 90 (e.g. out of range)'+ 
                          'in input "lat_arr".').with_traceback(sys.exc_info()[2])
         
     # Check that all lons are in range -180 to 180 or raise error:  
-    if any(abs(lon_arr)> 180):
+    if np.any(np.abs(lon_arr) > 180):
         raise ValueError('Some |Longitudes| are > 180 (e.g. out of range)'+
                  'in input "lon_arr".').with_traceback(sys.exc_info()[2])
                                                         
     # Check that pressures/alts in vert_arr are not < 0 or raise error:  
-    if any(vert_arr< 0):                                                
+    if np.any(np.abs(vert_arr) < 0):                                             
         raise ValueError('Some values in "vert_arr" are < 0 (e.g. out of range).'
                          ).with_traceback(sys.exc_info()[2])     
     
     # Check that no pressures are > 1100 hPa or ask if they want to proceed:                                                                         
-    if ((vert_is_pres is True) and (any(vert_arr >1100))):
+    if ((vert_is_pres is True) and (np.any(np.abs(vert_arr) > 1100))):
         print('WARNING: Some |Pressures| in "vert_arr" are > 1100 hPa.'+
               'Did you input them in a unit other than hPa by mistake?') 
         while True: 
@@ -282,7 +351,7 @@ def make_planeflight_inputs(savedir: str,
                 print("Invalid input. Please enter '1' to proceed or '2' to exit.")
                 
     # Check that NOT all alts <15 m, ask them if they want to proceed or not. 
-    elif ((vert_is_pres is False) and (all(vert_arr< 15))):
+    elif ((vert_is_pres is True) and (np.any(np.abs(vert_arr) < 15))):
          print('WARNING: All altitude inputs in "vert_arr" are < 15 m.'+
                'Did you input them in kilometers by mistake?') 
          user_input = input('Enter "1" to proceed if this was intended.\n'+ 
@@ -420,7 +489,7 @@ def make_planeflight_inputs(savedir: str,
     else: 
         # If user indicates values in vert_arr are ALTITUDES, assign TYPE to be 
         # one of the strings that triggers GEOS-Chem to convert alts to pressures: 
-        type2assign=valid_alt_types[0] 
+        type2assign='Tbao' #valid_alt_types[0] 
     
     # Make list of all tracers/diagnostics that planedat files should include: 
     tracer_list= diags+ tracers
@@ -852,8 +921,9 @@ def read_and_concat_planelogs(planelog_dir: str, spdb_yaml:str, config_yaml:str,
         output_dir=planelog_dir
         if not os.path.isdir(output_dir):
             raise Warning('The output directory passed to read_and_concat_planelogs() could not '+ 
-                          'be found:\n\t'+planelog_dir+'/n Output will be saved at '+
+                          'be found:\n\t'+planelog_dir+'\n Output will be saved at '+
                           'input planelog_dir instead.')
+            
 
         
     if len(output_file)==0: 
