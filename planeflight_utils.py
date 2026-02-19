@@ -14,6 +14,7 @@ Email: jessica.haskins@utah.edu
 import re
 import os
 import sys
+import warnings
 import yaml
 import numpy as np
 import pandas as pd 
@@ -115,12 +116,12 @@ def _read_planeflight_diags_yml(inputs_only:bool=False, no_collections:bool=Fals
                           returns valid input diags to create files & the standard 
                           output collection (which planeflight adds to all output files) 
                           
-        (2) no_collectrions - BOOL indicating if you want to return diags organized by 
-                        "collection" or not. Default is FALSE (to include them 
-                        arraged by collection) in a nested dict format where first 
-                        key is collection name. Setting to TRUE removes the nested 
-                        dict organizing them by collection so diagnostic name is 
-                        first key. 
+        (2) no_collections  - BOOL indicating if you want to return diags organized by
+                        "collection" or not. Default is FALSE (to include them
+                        arranged by collection) in a nested dict format where first
+                        key is collection name. Setting to TRUE removes the nested
+                        dict organizing them by collection so diagnostic name is
+                        first key.
     
     Outputs: 
     ------- 
@@ -155,7 +156,7 @@ def _read_planeflight_diags_yml(inputs_only:bool=False, no_collections:bool=Fals
         diags.pop('std_output') 
         
     if no_collections is False:
-        # Standard/defulat output has all diags arranged by collections. return that. 
+        # Standard/default output has all diags arranged by collections. return that.
         return diags
     else: 
         # Remove collections nested dict outputs and just return the diags themselves. 
@@ -217,7 +218,7 @@ def _display_diags(diags:dict, collections:list):
         lines.append(f"{diags[coll]['Collection']} Collection")
         lines.append("-"*50)
 
-        lines.append('Diagnostiscs:')
+        lines.append('Diagnostics:')
         for key in list(diags[coll]['Diagnostics'].keys()):
             lines.append(f"\t{key:<10} = {diags[coll]['Diagnostics'][key]['FULLNAME']}")
         if 'Notes' in list(diags[coll].keys()): 
@@ -273,11 +274,11 @@ def _check_str_arr_inputs(item, item_nm:str, allowed_vals, allowed_nm:str,
             if any(elem not in allowed_vals for elem in item):
                 if debug==True: print('Item is iterable of strs but has some unallowed values.')
                 baddies=','.join([elem for elem in item if elem not in allowed_vals])
-                # If any are found that aren't allowed, print & ask what to do next: 
-                raise Warning('The following items in input for "'+ item_nm+\
-                '" could not be found in '+allowed_nm+f':\n\t{baddies}.\n'+
-                'These variables will not be requested in created planedate input files.') 
-                    
+                # Warn about unrecognized items and continue with just the recognized ones:
+                warnings.warn('The following items in input for "'+ item_nm+
+                              '" could not be found in '+allowed_nm+f':\n\t{baddies}.\n'+
+                              'These variables will not be requested in created planeflight input files.',
+                              UserWarning, stacklevel=2)
                 ok_list=[elem for elem in item if elem in allowed_vals]
                 is_error=False; err_reason=''; give=ok_list;
             else: 
@@ -287,7 +288,7 @@ def _check_str_arr_inputs(item, item_nm:str, allowed_vals, allowed_nm:str,
         # If "item" is not str or array like, return type error: 
         if debug==True: print('Item was not identified and vals assigned were unknown.')
         is_error= True
-        err_reason='Input for "'+item_nm+'" is type='+type(item)+', and is not allowed.'
+        err_reason='Input for "'+item_nm+'" is type='+str(type(item))+', and is not allowed.'
         give=item 
         
     return is_error, err_reason, give
@@ -316,9 +317,9 @@ def _read_planelog_to_df(filename:str):
     #==========================================================================
     #      Read in header/data and deal with potential data split across lines: 
     #==========================================================================
-    # Open file and read in all lines to a list. 
-    fin = open(filename, 'r')  
-    lines = fin.readlines() 
+    # Open file and read in all lines to a list.
+    with open(filename, 'r') as fin:
+        lines = fin.readlines()
     
     # Make an empty list to hold lists containing data for all headers from each line: 
     ln_list=list([]);
@@ -469,22 +470,27 @@ def _build_output_meta_dict(df:pd.core.frame.DataFrame, config_yaml:str,spdb_yam
     # Initialize dictionary to hold info about all vars outputted from planeflight. 
     info_dict=dict({}) 
         
-    # Loop over all vars outputted in plane.log: 
-    for col in df.columns: 
-        
-        # Figure out if this is a column containing an advected species 
-        # concentration, optional diagnostic or is unrecognized...  
-        if col in list(nums2names.keys()) + list(nums2names.values()): 
+    # Loop over all vars outputted in plane.log:
+    for col in df.columns:
+
+        # Skip metadata columns added during concatenation (handled after loop).
+        if col in ['PlaneLog_File', 'File_Index']:
+            continue
+
+        # Figure out if this is a column containing an advected species
+        # concentration, optional diagnostic or is unrecognized...
+        if col in list(nums2names.keys()) + list(nums2names.values()):
             is_conc=True;
         elif col in list(diags.keys()):
             is_conc=False;
-        else: 
-            if col not in ['PlaneLog_File','File_Index']: 
-                raise Warning(f"Cant' determine if column {col} is an advected species" +\
-                              "or optional diagnostic!!").with_traceback(sys.exc_info()[2]) 
-            
-        # Initialize dict to hold info about this specific tracer: 
-        tracer_info=dict({'Long_name':'???','Units':'???'}) 
+        else:
+            warnings.warn(f"Can't determine if column '{col}' is an advected species "
+                          "or optional diagnostic. Skipping metadata for this column.",
+                          UserWarning, stacklevel=2)
+            continue
+
+        # Initialize dict to hold info about this specific tracer:
+        tracer_info=dict({'Long_name':'???','Units':'???'})
         
         # Pull info from species database if its an advected species... 
         if is_conc is True: 
@@ -497,20 +503,19 @@ def _build_output_meta_dict(df:pd.core.frame.DataFrame, config_yaml:str,spdb_yam
                     
                     # Dump info about var's name, units, formula, molecular weight into dict. 
                     if name in list(spdb.keys()):
-                        for key in list(spdb[col].keys()):
+                        for key in list(spdb[name].keys()):
                             if key in ['MW_g', 'Formula']:
                                 tracer_info[key]=spdb[name][key]
                             elif key =='FullName': 
                                 tracer_info['Long_name']='Concentration of '+spdb[name]['FullName']
-                    else: 
-                        raise Warning(f"Couldn't find info about advected species: {name}"\
-                                      ).with_traceback(sys.exc_info()[2]) 
-                else: 
-                    raise Warning(f"Entry for tracer number: {col} not found in"+\
-                                  "tracer name/num mapping built from config file."\
-                                  ).with_traceback(sys.exc_info()[2]) 
-                        
-                    name=col # Name of key in info_dict is column name/ tracer number... 
+                    else:
+                        warnings.warn(f"Couldn't find info about advected species: {name}",
+                                      UserWarning, stacklevel=2)
+                else:
+                    warnings.warn(f"Entry for tracer number: {col} not found in "
+                                  "tracer name/num mapping built from config file.",
+                                  UserWarning, stacklevel=2)
+                    name=col # Name of key in info_dict is column name/ tracer number...
                         
                 # When tracer numbers are used in planeflight, output units of advected 
                 # species are are mol mol-1 dry (v/v). So, add that info to dict here: 
@@ -540,9 +545,9 @@ def _build_output_meta_dict(df:pd.core.frame.DataFrame, config_yaml:str,spdb_yam
                         tracer_info['Long_name']=diags[col][key]
                     elif key=='UNITS':
                         tracer_info['Units']=diags[col][key]
-            else: 
-                raise Warning("Couldn't find info about column / optional diagnotic"+\
-                              f"named:{col}" ).with_traceback(sys.exc_info()[2]) 
+            else:
+                warnings.warn(f"Couldn't find info about optional diagnostic named: {col}",
+                              UserWarning, stacklevel=2)
                     
         # Add info about this tracer to the dictionary: 
         info_dict[name]=tracer_info
@@ -742,7 +747,7 @@ def _save_outputs(df:pd.core.frame.DataFrame, info_dict:dict, savefile:str,
     if as_xarr is False: 
         # Get a unique filename pair for df in .csv & info_dict as .yml considering 
         # whether to overwrite any existing files or not... 
-        savefile=_get_unique_filename(savefile, overwrite, exts=['.csv','.yml'])
+        savefile=_get_unique_filename(savefile, overwrite, exts=['.csv','.yaml'])
         
         # Save output pandas dataframe as a csv file: 
         df.to_csv(savefile+'.csv')
@@ -755,7 +760,7 @@ def _save_outputs(df:pd.core.frame.DataFrame, info_dict:dict, savefile:str,
         print('plane.log output file: '+\
               '\n  (1) Data stored in a pandas dataframe saved at: \n\t'+savefile+'.csv'+\
               '\n  (2) Associated metadata in a dict with column names '+\
-              'as keys saved at: \n\t'+savefile+'.yml') 
+              'as keys saved at: \n\t'+savefile+'.yaml')
             
         return df, info_dict 
             

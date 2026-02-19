@@ -6,7 +6,7 @@ Created on Fri Nov 19 10:40:31 2021
 """
 import xarray as xr
 import pandas as pd
-import matplotlib as plt 
+import matplotlib.pyplot as plt
 import os 
 import sys 
 import numpy as np
@@ -189,7 +189,15 @@ print(ds.StaticPrs.attrs['Units'])
 # "collections" that are compatible with your simulation type: 
 diags= pln.get_compatible_input_diags(simtype='fullchem',display=True)
 
-# The following examples show a few different ways to create the files using 
+# To retrieve only specific collections of diagnostics rather than all compatible ones,
+# pass a list of collection names to the 'these_collections' argument. Valid collection
+# names include: 'aer_uptake', 'aodb', 'aodc', 'aq_aer', 'chem_fams', 'defaults',
+# 'gmao_ice', 'gmao_met', 'hg', 'htep', 'isor', 'tomas'.
+met_diags = pln.get_compatible_input_diags(simtype='fullchem',
+                                           these_collections=['gmao_met','chem_fams'],
+                                           display=True)
+
+# The following examples show a few different ways to create the files using
 # either a list of species to output,  a wildcard to sample all advected 
 # species in your simulation, and how to select various optional diagnostics too! 
 

@@ -11,8 +11,9 @@ Email: jessica.haskins@utah.edu
 """
 import os
 import sys
+import warnings
 import numpy as np
-import pandas as pd 
+import pandas as pd
 import xarray as xr
 from datetime import datetime
 from planeflight_utils import (_check_simtype, _read_planeflight_diags_yml,_display_diags,
@@ -69,7 +70,7 @@ def remove_nan_rows(*arrays):
             data_dict[f'col{i}'] = pd.Series(array)
         elif isinstance(array, xr.DataArray):
             data_dict[f'col{i}'] = array.to_series()
-        elif isinstance(array, Timestamp):
+        elif isinstance(array, pd.Timestamp):
             data_dict[f'col{i}'] = pd.Series([pd.Timestamp(array) if not pd.isnull(array) else pd.NaT for _ in range(len(arrays[0]))])
         else:
             raise ValueError(f"Unsupported data type: {type(array)}")
@@ -170,16 +171,16 @@ def get_compatible_input_diags(simtype:str='',these_collections:list=[],
                 raise ValueError('None of the requested collections are compatiable with your '+ 
                                  'simulation type. The following options are those compatiable:'+info )
                 
-            else: 
-                # Otherwise just throw a warning we're dropping some... 
-                raise Warning('The following requested collections are not compatiable '+ 
+            else:
+                # Otherwise just warn we're dropping some...
+                warnings.warn('The following requested collections are not compatiable '+
                               'with your simulation type and will NOT be included in the '+
                               'outputted diagnostic collection:\n\t'+','.join(not_compat)+
                               '\nUse pln.get_compatible_input_diags(simtype,display=True) to display '+
-                              'all diagnostics compatiable with your simulation type.'
-                              ).with_traceback(sys.exc_info()[2]) 
-            
-        # Define collections so it only includes compatiable collections: 
+                              'all diagnostics compatiable with your simulation type.',
+                              UserWarning, stacklevel=2)
+
+        # Define collections so it only includes compatiable collections:
         collections=[item for item in these_collections if item in ok_diags]
             
     else: # If specific collections weren't requested, return all compatiable options: 
@@ -233,69 +234,69 @@ def make_planeflight_inputs(savedir: str,
                           and to determine simulation type, used to determine all valid 
                           additional optional planeflight diagnostics.
        
-       (2) datetimes    - PANDAS SERIES of datetimes in UTC stored as Timestamps at which 
-                          to sample the model.Type(datetimes[0]) should return: 
+       (3) datetimes    - PANDAS SERIES of datetimes in UTC stored as Timestamps at which
+                          to sample the model.Type(datetimes[0]) should return:
                           <class 'pandas._libs.tslibs.timestamps.Timestamp'>
-                          
-                          To create input in the correct format do: 
+
+                          To create input in the correct format do:
                                date_range = pd.date_range(start='2017-01-01', end='2017-01-03', freq='60s')
-                               datetimes=pd.Series(date_range) 
-       
-       (3) lat_arr      - ARRAY of latitudes at which to sample the model. (range: -90 to 90 deg)
-       
-       (4) lon_arr      - ARRAY of longitudes at which to sample the model (range: -180 to 180 deg)
-    
-       (5) vert_arr     - EITHER an ARRAY of pressures (hPa) OR altitudes above 
-                          the ground (meters) at which to sample the model. See 
-                          https://github.com/geoschem/geos-chem/issues/320 
-                          for discussion on whether input altitudes should be 
-                          "above ground" or "above sea level".     
-                         
-       (6) vert_is_pres - BOOLEAN indicating if "vert_arr" containined pressures or not. 
-                          When TRUE,  values are assumed to be pressures (hPa). 
-                          When FALSE, values are assumed to be altitudes (meters).       
-                          
-       (7) tracers     -  Either (1) an ARRAY of specific advected tracers you want to sample 
-                              OR (2) a STRING equal to '?ALL?' to sample all advected species 
-                          listed in your geoschem_config.yml file. 
-                          
-      (8)tracers_minus - (OPTIONAL) ARRAY containing STRINGS with all additional 
-                         advercted species tracers you don't want to include (only relevant 
-                         if you passed tracers='?ALL?'). 
-                          
-       (9) diags       -  (OPTIONAL) Either (1) an ARRAY containing STRINGS of any additional 
-                          diagnostics to sample from model (beyond tracers) OR (2) a 
-                          STRING equal to '?ALL?' to sample all available additional 
-                          diagnostics compatiable with your simulation type. Default is 
-                          to include the grid-box indexes planflight pulled from & 
+                               datetimes=pd.Series(date_range)
+
+       (4) lat_arr      - ARRAY of latitudes at which to sample the model. (range: -90 to 90 deg)
+
+       (5) lon_arr      - ARRAY of longitudes at which to sample the model (range: -180 to 180 deg)
+
+       (6) vert_arr     - EITHER an ARRAY of pressures (hPa) OR altitudes above
+                          the ground (meters) at which to sample the model. See
+                          https://github.com/geoschem/geos-chem/issues/320
+                          for discussion on whether input altitudes should be
+                          "above ground" or "above sea level".
+
+       (7) vert_is_pres - BOOLEAN indicating if "vert_arr" containined pressures or not.
+                          When TRUE,  values are assumed to be pressures (hPa).
+                          When FALSE, values are assumed to be altitudes (meters).
+
+       (8) tracers     -  Either (1) an ARRAY of specific advected tracers you want to sample
+                              OR (2) a STRING equal to '?ALL?' to sample all advected species
+                          listed in your geoschem_config.yml file.
+
+       (9) tracers_minus - (OPTIONAL) ARRAY containing STRINGS with all advected species
+                          tracers you don't want to include (only relevant if you passed
+                          tracers='?ALL?').
+
+       (10) diags       - (OPTIONAL) Either (1) an ARRAY containing STRINGS of any additional
+                          diagnostics to sample from model (beyond tracers) OR (2) a
+                          STRING equal to '?ALL?' to sample all available additional
+                          diagnostics compatiable with your simulation type. Default is
+                          to include the grid-box indexes planflight pulled from &
                           Pres/Temp/RH at center of grid box (e.g. ['GMAO_IIEV',
-                          'GMAO_JJEV', 'GMAO_LLEV', 'GMAO_PRES','GMAO_RELH', 'GMAO_TEMP']).  
-                          
-       (10) diags_minus - (OPTIONAL) ARRAY containing STRINGS with all additional 
-                         diagnostics you don't want to include (only relevant 
-                         if you passed diags='?ALL?'). 
-                          
-       (11) username   - (OPTIONAL) STRING contaiing name of user who created files. 
-                         This gets listed in header of resulting planedat input files. 
-                
-       (12) overwrite  - (OPTIONAL) BOOLEAN of whether to overwrite any existing files 
-                          at 'savedir' with this name or not. If FALSE, & any files 
-                          under 'savedir' would be overwritten, a new sub-directory 
-                          under 'savedir' named "NEW_YYYYMMDD_HHMMSS" is created to 
+                          'GMAO_JJEV', 'GMAO_LLEV', 'GMAO_PRES','GMAO_RELH', 'GMAO_TEMP']).
+
+       (11) diags_minus - (OPTIONAL) ARRAY containing STRINGS with all additional
+                          diagnostics you don't want to include (only relevant
+                          if you passed diags='?ALL?').
+
+       (12) username   - (OPTIONAL) STRING contaiing name of user who created files.
+                         This gets listed in header of resulting planedat input files.
+
+       (13) overwrite  - (OPTIONAL) BOOLEAN of whether to overwrite any existing files
+                          at 'savedir' with this name or not. If FALSE, & any files
+                          under 'savedir' would be overwritten, a new sub-directory
+                          under 'savedir' named "NEW_YYYYMMDD_HHMMSS" is created to
                           hold all the new output files. If TRUE, only files
                           with conflicting names under 'savedir' are overwritten.
-                          Default is set to FALSE (not to overwrite files). 
-                          
-        (13) use_tracer_names -(OPTIONAL) BOOL indicating if you want to write the file 
-                          with tracer names rather than with tracer numbers. Default is 
+                          Default is set to FALSE (not to overwrite files).
+
+       (14) use_tracer_names - (OPTIONAL) BOOL indicating if you want to write the file
+                          with tracer names rather than with tracer numbers. Default is
                           set to FALSE (to write file using tracer numbers) since outputs
                           like this have units of mol/mol dry. If set to true, input
-                          files will be written with tracer names instead, which will 
+                          files will be written with tracer names instead, which will
                           result in the output files have units of molec/cm3. While
-                          using tracer names is more readable, it adds an extra step of 
-                          potential error to compare directly to observations. Thus, 
+                          using tracer names is more readable, it adds an extra step of
+                          potential error to compare directly to observations. Thus,
                           writing files with tracer numbers is reccommended. This code
-                          can accomodate either though when reading in output files. 
+                          can accomodate either though when reading in output files.
                                  
     OUTPUT:
     ------
@@ -594,29 +595,23 @@ def make_planeflight_inputs(savedir: str,
             textList = [filename, username, today, spacer, ntracers, spacer] + \
                         tracer_list + [spacer, title, spacer, header]
             
-            # Open the output file and write headers line by line. 
-            outF = open(savedir+filename, "w")
-            for line in textList:
-                outF.write(line)
-                outF.write("\n")
-                
-            # Write the data to a temporary file, using ASCII encoding! Pandas default 
+            # Write the data to a temporary file using ASCII encoding. Pandas default
             # in Python 3 uses UTF-8 encoding, which GEOS-Chem can't read.
             df.to_csv(savedir+filename+'_0', header=False, index=None, sep=' ', mode='a',
-                      encoding='ascii') 
-            
-            # Annoyingly b/c we use a space as a delimiter in our resulting csv file,
-            # we get quotation marks around strings, so open the temporary file, read line 
-            # by line, and take out the quotation marks, and write that to the 
-            # actual output file and then delete the temporary file: 
-            fin = open(savedir+filename+'_0', 'r')
-            Lines = fin.readlines()
-            for line in Lines:
-                outF.write(line.replace('"','' ))
-                
-            outF.close() # Close the output file. 
-            fin.close() # Close the tempororay file 
-            os.remove(savedir+filename+'_0') # And delete the temp file. 
+                      encoding='ascii')
+
+            # Open the output file and write headers, then append the temp file contents.
+            # Because we use a space delimiter, pandas wraps strings in quotes; read the
+            # temp file line by line and strip those quotes before writing to the output file.
+            with open(savedir+filename, "w") as outF:
+                for line in textList:
+                    outF.write(line)
+                    outF.write("\n")
+                with open(savedir+filename+'_0', 'r') as fin:
+                    for line in fin:
+                        outF.write(line.replace('"', ''))
+
+            os.remove(savedir+filename+'_0') # Delete the temp file.
             
             print('Output saved at: '+ savedir + filename) # Tell where output is saved.
     
@@ -741,9 +736,10 @@ def read_planelog(planelog_file: str, spdb_yaml:str, config_yaml:str,
     # =========================================================================
     # Verify that output dirpath exists, otherwise assign output_dir to dir of input file. 
     if not os.path.isdir(output_dir):
-        raise Warning('The output directory passed to read_planelog() could not '+ 
-                      'be found:\n\t'+output_dir+'/n Output will be saved at '+
-                      'input planelog file directory instead.')
+        warnings.warn('The output directory passed to read_planelog() could not '
+                      'be found:\n\t'+output_dir+'\n Output will be saved at '
+                      'input planelog file directory instead.',
+                      UserWarning, stacklevel=2)
         output_dir= os.path.dirname(planelog_file)
         
     if len(output_file)==0: 
@@ -920,9 +916,10 @@ def read_and_concat_planelogs(planelog_dir: str, spdb_yaml:str, config_yaml:str,
     if len(output_dir)==0 or not os.path.isdir(output_dir): 
         output_dir=planelog_dir
         if not os.path.isdir(output_dir):
-            raise Warning('The output directory passed to read_and_concat_planelogs() could not '+ 
-                          'be found:\n\t'+planelog_dir+'\n Output will be saved at '+
-                          'input planelog_dir instead.')
+            warnings.warn('The output directory passed to read_and_concat_planelogs() could not '
+                          'be found:\n\t'+planelog_dir+'\n Output will be saved at '
+                          'input planelog_dir instead.',
+                          UserWarning, stacklevel=2)
             
 
         
@@ -934,15 +931,16 @@ def read_and_concat_planelogs(planelog_dir: str, spdb_yaml:str, config_yaml:str,
             date_str = file.split('.')[-1] # Get the date part (expecting 'plane.log.YYYYMMDD')
             if len(date_str) == 8:  # Ensure it's in YYYYMMDD format
                 dates.append(date_str)
-            else: 
-                good_dates=False # Update bool to ID that not all dates could be parsed. 
-                raise Warning('Dates extracted from plane.log.YYYYMMDD filenames'+
-                              'were not 8 chars long as expected, which can result'+ 
-                              'if you changed the format of the planeflight output'+ 
-                              'filenames from their default format in your'+
-                              'geoschem_config.yml file. So,the output filename of'+
-                              'the concatenated data will not contain the date range'+
-                              'of all data concatenated within it.').with_traceback(sys.exc_info()[2])
+            else:
+                good_dates=False # Update bool to ID that not all dates could be parsed.
+                warnings.warn('Dates extracted from plane.log.YYYYMMDD filenames '
+                              'were not 8 chars long as expected, which can result '
+                              'if you changed the format of the planeflight output '
+                              'filenames from their default format in your '
+                              'geoschem_config.yml file. So, the output filename of '
+                              'the concatenated data will not contain the date range '
+                              'of all data concatenated within it.',
+                              UserWarning, stacklevel=2)
         if good_dates is True: 
             # If we were able to get len(8) dates from all file names, take min/max. 
             earliest= min(dates); latest = max(dates)

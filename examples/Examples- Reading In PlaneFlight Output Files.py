@@ -39,6 +39,14 @@ df, info_dict = pln.read_planelog(filepath+'outputs_nums/plane.log.20170116',
                                   spdb_yaml=spdb_yaml,
                                   config_yaml=config_yaml)
 
+# info_dict contains metadata for every column in df.
+# Each key is a variable name; its value is a dict with at minimum 'Long_name' and 'Units'.
+# Advected species entries also include 'MW_g' and 'Formula'. Example:
+#   info_dict['O3']  →  {'Long_name': 'Concentration of Ozone', 'Units': 'mol/mol', ...}
+# To print a summary of all variable units:
+for var, meta in info_dict.items():
+    print(f"{var:20s}  units={meta.get('Units','N/A'):15s}  {meta.get('Long_name','')}")
+
 # =================================================================
 #  OPTION 2: Read in several plane.log files, concatenate data from
 # all of them into a single NetCDF file. If outputs came from input
