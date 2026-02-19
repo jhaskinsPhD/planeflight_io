@@ -11,7 +11,7 @@ import os
 import sys 
 import numpy as np
 
-# Update 'path_to_this' to point to wherever you have put 'gcpy_campaigns' on your computer. 
+# Update 'path_to_this' to point to wherever you have put 'planeflight_io' on your computer.
 path_to_this= '/uufs/chpc.utah.edu/common/home/u6044586/python_scripts/modules/planeflight_io/'
 sys.path.insert(0, path_to_this)
 import planeflight_io as pln
@@ -27,102 +27,106 @@ path_to_examples= path_to_this+'/examples'
 # In this example, we'll be using the function pln.make_planeflight_inputs() to create input 
 # plane.dat files for GEOS-Chem here. Read about the function's inputs/outputs here: 
 """
-make_planeflight_inputs(savedir: str, 
+make_planeflight_inputs(savedir: str,
                         gc_config:str,
                         datetimes,
-                        lat_arr, 
-                        lon_arr, 
+                        lat_arr,
+                        lon_arr,
                         vert_arr,
-                        vert_is_pres:bool, 
+                        vert_is_pres:bool,
                         tracers,
-                        diags,
+                        tracers_minus: list =[],
+                        diags=[],
                         diags_minus: list =[],
                         username: str = 'user',
                         overwrite: bool = False,
                         use_tracer_names:bool=False)
-    
+
 INPUTS:
 -------
 Note: For all inputs where "ARRAY" is accepted, vars can be 1-D lists, np.ndarray,
       pd.Series, or xr.dataarray. Rounding/ # of accepted decimals and input data types are
-      all automatically converted to what GEOS-Chem requires. 
+      all automatically converted to what GEOS-Chem requires.
 
     (1) savedir      - STRING containing path to directory in which to save
-                      the output planeflight.dat files at. 
-                  
-    (2) gc_config   - STRING containing path to your geoschem_config.yml file 
-                      used to read in/define valid names of transported tracers
-                      and to determine simulation type, used to determine all valid 
-                      additional / optional planeflight diagnostics.
-   
-    (2) datetimes    - PANDAS SERIES of datetimes in UTC stored as Timestamps at which 
-                      to sample the model.Type(datetimes[0]) should return: 
-                      <class 'pandas._libs.tslibs.timestamps.Timestamp'>
-                      
-                      To create input in the correct format do: 
-                            date_range = pd.date_range(start='2017-01-01', end='2017-01-03', freq='60s')
-                            datetimes=pd.Series(date_range) 
-   
-    (3) lat_arr      - ARRAY of latitudes at which to sample the model. (range: -90 to 90 deg)
-   
-    (4) lon_arr      - ARRAY of longitudes at which to sample the model (range: -180 to 180 deg)
+                      the output planeflight.dat files at.
 
-    (5) vert_arr     - EITHER an ARRAY of pressures (hPa) OR altitudes above 
-                      the ground (meters) at which to sample the model. See 
-                      https://github.com/geoschem/geos-chem/issues/320 
-                      for discussion on whether input altitudes should be 
-                      "above ground" or "above sea level".     
-                     
-    (6) vert_is_pres - BOOLEAN indicating if "vert_arr" containined pressures or not. 
-                      When TRUE,  values are assumed to be pressures (hPa). 
-                      When FALSE, values are assumed to be altitudes (meters).       
-                      
-    (7) tracers     -  Either (1) an ARRAY of specific advected tracers you want to sample 
-                          OR (2) a STRING equal to '?ALL?' to sample all advected species 
-                      listed in your geoschem_config.yml file. 
-                      
-    (8) diags       -  (OPTIONAL) Either (1) an ARRAY containing STRINGS of any additional 
-                      diagnostics to sample from model (beyond tracers) OR (2) a 
-                      STRING equal to '?ALL?' to sample all available additional 
-                      diagnostics compatiable with your simulation type. Default is 
-                      to include the grid-box indexes planflight pulled from & 
+    (2) gc_config   - STRING containing path to your geoschem_config.yml file
+                      used to read in/define valid names of transported tracers
+                      and to determine simulation type, used to determine all valid
+                      additional / optional planeflight diagnostics.
+
+    (3) datetimes    - PANDAS SERIES of datetimes in UTC stored as Timestamps at which
+                      to sample the model.Type(datetimes[0]) should return:
+                      <class 'pandas._libs.tslibs.timestamps.Timestamp'>
+
+                      To create input in the correct format do:
+                            date_range = pd.date_range(start='2017-01-01', end='2017-01-03', freq='60s')
+                            datetimes=pd.Series(date_range)
+
+    (4) lat_arr      - ARRAY of latitudes at which to sample the model. (range: -90 to 90 deg)
+
+    (5) lon_arr      - ARRAY of longitudes at which to sample the model (range: -180 to 180 deg)
+
+    (6) vert_arr     - EITHER an ARRAY of pressures (hPa) OR altitudes above
+                      the ground (meters) at which to sample the model. See
+                      https://github.com/geoschem/geos-chem/issues/320
+                      for discussion on whether input altitudes should be
+                      "above ground" or "above sea level".
+
+    (7) vert_is_pres - BOOLEAN indicating if "vert_arr" containined pressures or not.
+                      When TRUE,  values are assumed to be pressures (hPa).
+                      When FALSE, values are assumed to be altitudes (meters).
+
+    (8) tracers     -  Either (1) an ARRAY of specific advected tracers you want to sample
+                          OR (2) a STRING equal to '?ALL?' to sample all advected species
+                      listed in your geoschem_config.yml file.
+
+    (9) tracers_minus - (OPTIONAL) ARRAY containing STRINGS with all advected species
+                      tracers you don't want to include (only relevant if you passed
+                      tracers='?ALL?').
+
+    (10) diags       -  (OPTIONAL) Either (1) an ARRAY containing STRINGS of any additional
+                      diagnostics to sample from model (beyond tracers) OR (2) a
+                      STRING equal to '?ALL?' to sample all available additional
+                      diagnostics compatiable with your simulation type. Default is
+                      to include the grid-box indexes planflight pulled from &
                       Pres/Temp/RH at center of grid box (e.g. ['GMAO_IIEV',
-                      'GMAO_JJEV', 'GMAO_LLEV', 'GMAO_PRES','GMAO_RELH', 'GMAO_TEMP']).  
-                      
-    (9) diags_minus - (OPTIONAL) ARRAY containing STRINGS with all additional 
-                      diagnostics you don't want to include (only relevant 
-                      if you passed diags='?ALL?'). 
-                      
-    (10) username   - (OPTIONAL) STRING contaiing name of user who created files. 
-                      This gets listed in header of resulting planedat input files. 
-            
-    (11) overwrite  - (OPTIONAL) BOOLEAN of whether to overwrite any existing files 
-                      at 'savedir' with this name or not. If FALSE, & any files 
-                      under 'savedir' would be overwritten, a new sub-directory 
-                      under 'savedir' named "NEW_YYYYMMDD_HHMMSS" is created to 
+                      'GMAO_JJEV', 'GMAO_LLEV', 'GMAO_PRES','GMAO_RELH', 'GMAO_TEMP']).
+
+    (11) diags_minus - (OPTIONAL) ARRAY containing STRINGS with all additional
+                      diagnostics you don't want to include (only relevant
+                      if you passed diags='?ALL?').
+
+    (12) username   - (OPTIONAL) STRING contaiing name of user who created files.
+                      This gets listed in header of resulting planedat input files.
+
+    (13) overwrite  - (OPTIONAL) BOOLEAN of whether to overwrite any existing files
+                      at 'savedir' with this name or not. If FALSE, & any files
+                      under 'savedir' would be overwritten, a new sub-directory
+                      under 'savedir' named "NEW_YYYYMMDD_HHMMSS" is created to
                       hold all the new output files. If TRUE, only files
                       with conflicting names under 'savedir' are overwritten.
-                      Default is set to FALSE (not to overwrite files). 
-                      
-    (12) use_tracer_names -(OPTIONAL) BOOL indicating if you want to write the file 
-                      with tracer names rather than with tracer numbers. Default is 
+                      Default is set to FALSE (not to overwrite files).
+
+    (14) use_tracer_names -(OPTIONAL) BOOL indicating if you want to write the file
+                      with tracer names rather than with tracer numbers. Default is
                       set to FALSE (to write file using tracer numbers) since outputs
                       like this have units of mol/mol dry. If set to true, input
-                      files will be written with tracer names instead, which will 
+                      files will be written with tracer names instead, which will
                       result in the output files have units of molec/cm3. While
-                      using tracer names is more readable, it adds an extra step of 
-                      potential error to compare directly to observations. Thus, 
+                      using tracer names is more readable, it adds an extra step of
+                      potential error to compare directly to observations. Thus,
                       writing files with tracer numbers is reccommended. This code
-                      can accomodate either though when reading in output files. 
-                             
+                      can accomodate either though when reading in output files.
+
 OUTPUT:
 ------
-    (1) One file for each day listed in 'datetimes' named "planeflight.dat.YYYYMMDD"
-        written to "savedir"that can be passed to GEOS-Chem as input files for 
-        the planeflight diagnostic. Outputted files convert the tracer names you 
-        pass to the tracer numbers so that your output files have concenrations 
-        in units of mol/mol rather than as molec/cm3 which occurs if you pass 
-        tracer names instead of numbers in the input plane.dat files. 
+    (1) One file for each day listed in 'datetimes' named "Planeflight.dat.YYYYMMDD"
+        written to "savedir" that can be passed to GEOS-Chem as input files for
+        the planeflight diagnostic. By default, outputted files convert tracer names
+        to tracer numbers so that output files have concentrations in units of mol/mol
+        rather than molec/cm3 (which occurs if tracer names are used instead).
 """
 
 #==============================================================================
