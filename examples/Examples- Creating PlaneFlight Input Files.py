@@ -78,17 +78,19 @@ ds = xr.open_dataset(senex_pth)
 unq_dates = np.unique(ds.time.dt.date)
 ds = ds.where(((ds.time.dt.date == unq_dates[0]) | (ds.time.dt.date == unq_dates[1])), drop=True)
 
-# Times — must be a pd.Series of pd.Timestamps in UTC:
+# Times — pd.Series of pd.Timestamps in UTC:
 senex_time = pd.to_datetime(ds.time.values).to_series().reset_index(drop=True)
-print(type(senex_time[0]))  # should be <class 'pandas._libs.tslibs.timestamps.Timestamp'>
+print(f'Time:  {type(senex_time[0])}')  # must be pandas Timestamp
 
-# Lat/lon — 1-D arrays, lon must be in range -180 to 180 (not 0-360):
+# Lat/lon — 1-D arrays, lon must be in range -180 to 180:
 senex_lat = ds.GpsLat.values
 senex_lon = ds.GpsLon.values
+print(f'Lat:   {senex_lat.dtype}, range [{senex_lat.min():.2f}, {senex_lat.max():.2f}] deg')
+print(f'Lon:   {senex_lon.dtype}, range [{senex_lon.min():.2f}, {senex_lon.max():.2f}] deg')
 
 # Pressure in hPa — confirm units before passing:
 senex_pres = ds.StaticPrs.values
-print(ds.StaticPrs.attrs['Units'])  # should be 'hPa' or 'mb' (equivalent)
+print(f'Pres:  {senex_pres.dtype}, units = {ds.StaticPrs.attrs["Units"]} (must be hPa / mb)')
 
 # %%
 # ==============================================================================
@@ -99,16 +101,16 @@ print(ds.StaticPrs.attrs['Units'])  # should be 'hPa' or 'mb' (equivalent)
 # optional diagnostics, no config file.
 #
 # When is this useful?
-#   - You're working on a machine that doesn't have the run directory
-#   - You're setting up files before the run exists (prototyping)
-#   - You're collaborating using someone else's output
+#   - You haven't made a rundir yet and only need a few known tracers to be outputted. 
 #
-# One consequence: without gc_config, tracer names are written to the input
-# file instead of tracer numbers. This causes GEOS-Chem to output advected
-# species concentrations in molec/cm3 rather than mol/mol. That's fine — you
-# can convert at read time using convert2_molmol=True in
-# pln.read_and_concat_planelogs(). Example 3 shows how to avoid this entirely
-# if you do have gc_config available.
+# One consequence: 
+#    Without passing a gc_config.yml file, tracer names are written to 
+#   the input file instead of tracer numbers. This causes GEOS-Chem to output advected
+#   species concentrations in molec/cm3 rather than mol/mol. W
+#          Why? See: https://github.com/geoschem/geos-chem/issues/796  
+#   But, that's fine — you can convert at read time using convert2_molmol=True in
+#   pln.read_and_concat_planelogs(). Example 3 shows how to avoid this entirely
+#   if you do have a gc_config.yml available.
 
 ex1_dir = path_to_examples + '/example1/'
 if not os.path.isdir(ex1_dir):
@@ -137,17 +139,17 @@ pln.make_planeflight_inputs(
 #
 # Crucially, optional diagnostics do NOT require gc_config — they're organised
 # by simulation type, not by species list. You only need to tell the function
-# what kind of simulation you're running (simtype=).
+# what kind of simulation you're running (simtype='fullchem').
 #
 # Use pln.get_compatible_input_diags() to explore what's available. Valid
-# collection names include: 'aer_uptake', 'aodb', 'aodc', 'aq_aer',
-# 'chem_fams', 'defaults', 'gmao_ice', 'gmao_met', 'hg', 'htep', 'isor',
-# 'tomas'.
+# collection names include: 
+#    'aer_uptake', 'aodb', 'aodc', 'aq_aer', 'chem_fams', 'defaults', 
+#    'gmao_ice', 'gmao_met', 'hg', 'htep', 'isor', 'tomas'.
 
 # See every optional diagnostic available for a fullchem simulation:
 all_diags = pln.get_compatible_input_diags(simtype='fullchem', display=True)
 
-# Or filter by collection to get just the ones you care about:
+# Or filter by collection to get just the ones you care about.
 met_and_fam = pln.get_compatible_input_diags(
     simtype='fullchem',
     these_collections=['gmao_met', 'chem_fams'],
@@ -180,22 +182,23 @@ pln.make_planeflight_inputs(
 # If you have your geoschem_config.yml, passing it as gc_config unlocks three
 # things that aren't possible without it:
 #
-#   1. Tracer numbers instead of names — the function reads the config to map
-#      each species name to its tracer number and writes numbers to the input
-#      file. GEOS-Chem then outputs advected species in mol/mol dry, which is
+#   1. Tracer numbers instead of names — the function reads the geoschem_config.yml 
+#      file to map each species name to its tracer number and writes numbers to the 
+#      input file. GEOS-Chem then outputs advected species in mol/mol dry, which is
 #      directly comparable to observations with no further conversion needed.
 #      (Without gc_config, names are written and output is in molec/cm3.)
 #
-#   2. tracers='?ALL?' wildcard — the config contains the full list of advected
+#   2. tracers='?ALL?' wildcard — The config contains the full list of advected
 #      species in your run. Passing '?ALL?' samples all of them automatically,
-#      so you don't need to maintain an explicit list. See Example 4.
+#      so you don't need to pass an explicit list of every tracer you want to output.
+#      See Example 4.
 #
 #   3. Species validation — the function checks every tracer you request against
 #      the config's species list, catching typos before they silently produce
 #      empty columns in your plane.log output.
 #
-# If you don't have the config available, stick with Examples 1 & 2 and pass
-# convert2_molmol=True when reading output.
+# If you don't have the geoschem_config.yml available, stick with Examples 1 & 2 and pass
+# convert2_molmol=True when reading your output back in.
 
 gc_config = path_to_examples + '/datafiles_for_examples/geoschem_config.yml'
 
@@ -205,7 +208,7 @@ if not os.path.isdir(ex3_dir):
 
 pln.make_planeflight_inputs(
     savedir=ex3_dir,
-    gc_config=gc_config,         # Unlocks mol/mol output, validation, and '?ALL?'
+    gc_config=gc_config,         # Unlocks mol/mol output, species validation, and '?ALL?'
     datetimes=senex_time,
     lat_arr=senex_lat,
     lon_arr=senex_lon,
@@ -217,9 +220,9 @@ pln.make_planeflight_inputs(
     overwrite=True,
     use_tracer_names=False,      # Default: write tracer numbers → output in mol/mol
 )
-# Open the output files from this example and Example 1 side by side. The
-# tracer entries will look different (numbers vs. names), and when you run
-# GEOS-Chem the concentrations will be in different units as a result.
+# Open the files from this example and Example 1 side by side — the tracer
+# entries will look different (numbers vs. names), and when you run GEOS-Chem
+# the concentrations will be in different units as a result.
 
 # %%
 # ==============================================================================
@@ -238,7 +241,7 @@ pln.make_planeflight_inputs(
 # Note: use_tracer_names=True here so you can open these files alongside those
 # from Example 3 and directly compare the tracer-number vs. tracer-name format.
 
-tracers_minus = ['ClNO2', 'Cl2', 'ClO', 'HOCl', 'HCl', 'BrCl']
+tracers_minus = ['ClNO2', 'Cl2', 'ClO', 'HOCl', 'HCl', 'BrCl']  # exclude halogen tracers
 
 diags_minus = [
     "AODC_SULF", "AODC_BLKC", "AODC_ORGC", "AODC_SALA", "AODC_SALC",

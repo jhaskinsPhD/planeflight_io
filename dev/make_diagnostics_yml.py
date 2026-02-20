@@ -3,9 +3,12 @@
 """
 Created on Wed Sep 25 15:32:12 2024
 
-@author: u6044586
+@author: Dr. Jessica D. Haskins
+GitHub: @jhaskinsPhD
+Email: jessica.haskins@utah.edu
 """
 import yaml
+import os 
 
 # The following collections have been tested & work in GEOS-Chem: 
 defaults= dict({"Collection":"Default Diagnostics", 
@@ -145,5 +148,6 @@ def save_dictionaries_to_yaml(filename, data):
         yaml.dump(data, f)
 
 # Save to a YAML file
-path='/uufs/chpc.utah.edu/common/home/u6044586/python_scripts/modules/gcpy_campaigns/planeflight_diagnostics.yaml'
-save_dictionaries_to_yaml(path, all_diags)
+this_dir= os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+savepath=os.path.join(this_dir, 'planeflight_diagnostics.yml')
+save_dictionaries_to_yaml(savepath, all_diags)
