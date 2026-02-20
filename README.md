@@ -14,6 +14,52 @@ Python tools to create and read GEOS-Chem planeflight diagnostic input/output fi
 
 ---
 
+## What You Need
+
+### Your campaign / observation data
+
+`make_planeflight_inputs()` requires four arrays describing the observation points. Match these types, units, and conventions exactly — the function does not silently re-project or re-scale inputs:
+
+| Argument | Required type | Units / convention |
+|---|---|---|
+| `datetimes` | `pd.Series` of `pd.Timestamp` | UTC (not local time) |
+| `lat_arr` | 1-D `np.ndarray` | degrees North (−90 to 90) |
+| `lon_arr` | 1-D `np.ndarray` | degrees East (−180 to 180, **not** 0–360) |
+| `vert_arr` | 1-D `np.ndarray` | pressure in **hPa** (preferred) or altitude in **meters above ground** |
+
+All four arrays must be the same length and NaN-free.
+
+**`vert_is_pres` — pressure vs. altitude:** The planeflight diagnostic only natively supports altitude input for CCGG/tower-type observations; all aircraft data should use pressure (`vert_is_pres=True`). Using altitude for aircraft is technically possible — `planeflight_io` sets the TYPE string accordingly — but it is not advisable because of ambiguity between "above ground" and "above sea level" conventions. See [GH issue #320](https://github.com/geoschem/geos-chem/issues/320) for the full discussion.
+
+### Your GEOS-Chem run files
+
+Two YAML files from your GEOS-Chem run directory are required:
+
+- **`geoschem_config.yml`** — used by `make_planeflight_inputs()` to:
+  1. Determine your simulation type, so only compatible optional diagnostics are offered.
+  2. Retrieve the full list of advected species, so `tracers='?ALL?'` works correctly.
+  3. Map species names → tracer numbers, so outputs come in `mol/mol` (see below).
+- **`species_database.yml`** — used when *reading* output (by `read_planelog()` and `read_and_concat_planelogs()`) to attach metadata — molecular weight, chemical formula, long name, and units — to each output column.
+
+Both files live in your GEOS-Chem run directory (the directory where you ran or will run GEOS-Chem).
+
+---
+
+## Tracer Numbers vs. Tracer Names
+
+The `use_tracer_names` argument in `make_planeflight_inputs()` controls the units of advected species in the `plane.log` output:
+
+| `use_tracer_names` | What goes in the input file | Units in `plane.log` output |
+|---|---|---|
+| `False` (default, **recommended**) | Tracer numbers (e.g. `1`, `2`, `3`) | **mol/mol dry** — directly comparable to observations |
+| `True` | Tracer names (e.g. `'NO'`, `'O3'`) | **molec/cm³** — requires conversion before comparing |
+
+Using tracer **numbers** produces output in `mol/mol dry`, which can be compared directly to aircraft observations without any further conversion. Using tracer **names** is more human-readable in the input file, but GEOS-Chem will output advected species concentrations in `molec/cm³`. See [GH issue #796](https://github.com/geoschem/geos-chem/issues/796) for the full explanation of why this unit difference exists.
+
+**Recommendation:** leave `use_tracer_names=False` (the default) unless you have a specific reason to use names. If you do use tracer names, pass `convert2_molmol=True` when reading output with `pln.read_and_concat_planelogs()`.
+
+---
+
 ## Installation
 
 ### Option 1: PYTHONPATH (no pip required)
@@ -46,22 +92,22 @@ import planeflight_io as pln
 
 # --- Create input files ---
 pln.make_planeflight_inputs(
-    savedir='/path/to/output/',
-    gc_config='/path/to/geoschem_config.yml',
-    datetimes=senex_time,   # pd.Series of pd.Timestamps (UTC)
-    lat_arr=senex_lat,
-    lon_arr=senex_lon,
-    vert_arr=senex_pres,    # Pressure array in hPa
-    vert_is_pres=True,
-    tracers=['NO', 'O3', 'CO'],
-    diags=['NOy', 'RO2'],
+    savedir='/path/to/output/',               # Directory to save Planeflight.dat.YYYYMMDD files
+    gc_config='/path/to/geoschem_config.yml', # Your run's geoschem_config.yml (see "What You Need")
+    datetimes=senex_time,                     # pd.Series of pd.Timestamps — must be UTC
+    lat_arr=senex_lat,                        # Latitudes in degrees North (−90 to 90)
+    lon_arr=senex_lon,                        # Longitudes in degrees East (−180 to 180, not 0–360)
+    vert_arr=senex_pres,                      # Pressure in hPa (preferred) or altitude in m
+    vert_is_pres=True,                        # True = pressure input; False = altitude input
+    tracers=['NO', 'O3', 'CO'],               # Specific tracers, or '?ALL?' for all advected species
+    diags=['NOy', 'RO2'],                     # Optional diagnostics, or '?ALL?' for all compatible
 )
 
 # --- Read a single plane.log ---
 df, info_dict = pln.read_planelog(
     '/path/to/plane.log.20170116',
-    spdb_yaml='/path/to/species_database.yml',
-    config_yaml='/path/to/geoschem_config.yml',
+    spdb_yaml='/path/to/species_database.yml',   # For column metadata (MW, formula, units)
+    config_yaml='/path/to/geoschem_config.yml',  # To identify tracers vs. diagnostics
 )
 
 # --- Concatenate multiple plane.log files into one NetCDF ---
