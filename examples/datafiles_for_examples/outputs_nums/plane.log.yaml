@@ -1,0 +1,1227 @@
+ACET:
+  Formula: CH3C(O)CH3
+  Long_name: Concentration of Acetone
+  MW_g: 58.09
+  Units: mol/mol
+ACTA:
+  Formula: CH3C(O)OH
+  Long_name: Concentration of Acetic acid
+  MW_g: 60.06
+  Units: mol/mol
+AERI:
+  Formula: I
+  Long_name: Concentration of Iodine on aerosol
+  MW_g: 126.9
+  Units: mol/mol
+ALD2:
+  Formula: CH3CHO
+  Long_name: Concentration of Acetaldehyde
+  MW_g: 44.06
+  Units: mol/mol
+ALK4:
+  Long_name: Concentration of Lumped >= C4 Alkanes
+  MW_g: 58.12
+  Units: mol/mol
+AN:
+  Long_name: Concentration of AN family
+  Units: mol/mol
+AODB_BLKC:
+  Long_name: Column aerosol optical depth for black carbon *below aircraft*
+  Units: unitless
+AODB_DUST:
+  Long_name: Column aerosol optical depth for dust *below aircraft*
+  Units: unitless
+AODB_ORGC:
+  Long_name: Column aerosol optical depth for organic carbon *below aircraft*
+  Units: unitless
+AODB_SALA:
+  Long_name: Column aerosol optical depth for accumulation mode sea salt *below aircraft*
+  Units: unitless
+AODB_SALC:
+  Long_name: Column aerosol optical depth for coarse mode sea salt *below aircraft*
+  Units: unitless
+AODB_SULF:
+  Long_name: Column aerosol optical depth for sulfate *below aircraft*
+  Units: unitless
+AODC_BLKC:
+  Long_name: Column aerosol optical depth for black carbon
+  Units: unitless
+AODC_DUST:
+  Long_name: Column aerosol optical depth for dust
+  Units: unitless
+AODC_ORGC:
+  Long_name: Column aerosol optical depth for organic carbon
+  Units: unitless
+AODC_SALA:
+  Long_name: Column aerosol optical depth for accumulation mode sea salt
+  Units: unitless
+AODC_SALC:
+  Long_name: Column aerosol optical depth for coarse mode sea salt
+  Units: unitless
+AODC_SULF:
+  Long_name: Column aerosol optical depth for sulfate
+  Units: unitless
+AONITA:
+  Formula: C6H6O6N
+  Long_name: Concentration of Aerosol-phase organonitrates from aromatics
+  MW_g: 189.12
+  Units: mol/mol
+AQAER_RAD:
+  Long_name: Aqueous aerosol radius
+  Units: cm
+AQAER_SURF:
+  Long_name: Aqueous aerosol surface area
+  Units: cm2/cm3
+AROMP4:
+  Formula: C4H4O2
+  Long_name: Concentration of Generic C4 product of aromatics
+  MW_g: 68.08
+  Units: mol/mol
+AROMP5:
+  Formula: C5H6O2
+  Long_name: Concentration of C5 unsaturated dicarbonyl
+  MW_g: 98.1
+  Units: mol/mol
+ATOOH:
+  Formula: CH3C(O)CH2OOH
+  Long_name: Concentration of ATO2 peroxide
+  MW_g: 90.09
+  Units: mol/mol
+BALD:
+  Formula: C7H6O
+  Long_name: Concentration of Benzaldehyde
+  MW_g: 106.12
+  Units: mol/mol
+BCPI:
+  Formula: C
+  Long_name: Concentration of Hydrophilic black carbon aerosol
+  MW_g: 12.01
+  Units: mol/mol
+BCPO:
+  Formula: C
+  Long_name: Concentration of Hydrophobic black carbon aerosol
+  MW_g: 12.01
+  Units: mol/mol
+BENZ:
+  Formula: C6H6
+  Long_name: Concentration of Benzene
+  MW_g: 78.12
+  Units: mol/mol
+BENZP:
+  Formula: C6H6O2
+  Long_name: Concentration of Phenyl hydroperoxide
+  MW_g: 110.11
+  Units: mol/mol
+BUTDI:
+  Formula: C4H4O2
+  Long_name: Concentration of Butenedial
+  MW_g: 84.07
+  Units: mol/mol
+BZCO3H:
+  Formula: C6H5CO3H
+  Long_name: Concentration of Perbenzoic acid
+  MW_g: 138.12
+  Units: mol/mol
+BZPAN:
+  Formula: C7H5O5N
+  Long_name: Concentration of Peroxybenzoylnitrate
+  MW_g: 183.12
+  Units: mol/mol
+Br:
+  Formula: Br
+  Long_name: Concentration of Atomic bromine
+  MW_g: 79.9
+  Units: mol/mol
+Br2:
+  Formula: Br2
+  Long_name: Concentration of Molecular Bromine
+  MW_g: 159.8
+  Units: mol/mol
+BrCl:
+  Formula: BrCl
+  Long_name: Concentration of Bromine chloride
+  MW_g: 115.45
+  Units: mol/mol
+BrNO2:
+  Formula: BrNO2
+  Long_name: Concentration of Nitryl bromide
+  MW_g: 125.91
+  Units: mol/mol
+BrNO3:
+  Formula: BrNO3
+  Long_name: Concentration of Bromine nitrate
+  MW_g: 141.91
+  Units: mol/mol
+BrO:
+  Formula: BrO
+  Long_name: Concentration of Bromine monoxide
+  MW_g: 95.9
+  Units: mol/mol
+BrSALA:
+  Formula: Br
+  Long_name: Concentration of Fine sea salt bromine
+  MW_g: 79.9
+  Units: mol/mol
+BrSALC:
+  Formula: Br
+  Long_name: Concentration of Coarse sea salt bromine
+  MW_g: 79.9
+  Units: mol/mol
+C2H2:
+  Formula: C2H2
+  Long_name: Concentration of Acetylene (aka Ethyne)
+  MW_g: 26.05
+  Units: mol/mol
+C2H4:
+  Formula: C2H4
+  Long_name: Concentration of Ethylene
+  MW_g: 28.05
+  Units: mol/mol
+C2H6:
+  Formula: C2H6
+  Long_name: Concentration of Ethane
+  MW_g: 30.08
+  Units: mol/mol
+C3H8:
+  Formula: C3H8
+  Long_name: Concentration of Propane
+  MW_g: 44.11
+  Units: mol/mol
+CCl4:
+  Formula: CCl4
+  Long_name: Concentration of Carbon tetrachloride
+  MW_g: 153.82
+  Units: mol/mol
+CFC11:
+  Formula: CCl3F
+  Long_name: Concentration of CFC-11
+  MW_g: 137.37
+  Units: mol/mol
+CFC113:
+  Formula: C2Cl3F3
+  Long_name: Concentration of CFC-113
+  MW_g: 187.38
+  Units: mol/mol
+CFC114:
+  Formula: C2Cl2F4
+  Long_name: Concentration of CFC-114
+  MW_g: 170.92
+  Units: mol/mol
+CFC115:
+  Formula: C2ClF5
+  Long_name: Concentration of CFC-115
+  MW_g: 154.47
+  Units: mol/mol
+CFC12:
+  Formula: CCl2F2
+  Long_name: Concentration of CFC-12
+  MW_g: 120.91
+  Units: mol/mol
+CH2Br2:
+  Formula: CH2Br2
+  Long_name: Concentration of Dibromomethane
+  MW_g: 173.83
+  Units: mol/mol
+CH2Cl2:
+  Formula: CH2Cl2
+  Long_name: Concentration of Dichloromethane
+  MW_g: 84.93
+  Units: mol/mol
+CH2I2:
+  Formula: CH2I2
+  Long_name: Concentration of Diiodomethane
+  MW_g: 267.84
+  Units: mol/mol
+CH2IBr:
+  Formula: CH2IBr
+  Long_name: Concentration of Bromoiodomethane
+  MW_g: 220.84
+  Units: mol/mol
+CH2ICl:
+  Formula: CH2ICl
+  Long_name: Concentration of Chloroiodomethane
+  MW_g: 176.38
+  Units: mol/mol
+CH2O:
+  Formula: CH2O
+  Long_name: Concentration of Formaldehyde
+  MW_g: 30.03
+  Units: mol/mol
+CH3Br:
+  Formula: CH3Br
+  Long_name: Concentration of Methyl bromide
+  MW_g: 94.94
+  Units: mol/mol
+CH3CCl3:
+  Formula: CH3CCl3
+  Long_name: Concentration of Methyl chloroform
+  MW_g: 133.35
+  Units: mol/mol
+CH3Cl:
+  Formula: CH3Cl
+  Long_name: Concentration of Chloromethane
+  MW_g: 50.45
+  Units: mol/mol
+CH3I:
+  Formula: CH3I
+  Long_name: Concentration of Methyl iodide
+  MW_g: 141.94
+  Units: mol/mol
+CH4:
+  Formula: CH4
+  Long_name: Concentration of Methane
+  MW_g: 16.04
+  Units: mol/mol
+CHBr3:
+  Formula: CHBr3
+  Long_name: Concentration of Bromoform
+  MW_g: 252.73
+  Units: mol/mol
+CHCl3:
+  Formula: CHCl3
+  Long_name: Concentration of Chloroform
+  MW_g: 119.35
+  Units: mol/mol
+CLOCK:
+  Long_name: Concentration of Clock tracer for diagnosing age of air
+  MW_g: 1.0
+  Units: mol/mol
+CO:
+  Formula: CO
+  Long_name: Concentration of Carbon monoxide
+  MW_g: 28.01
+  Units: mol/mol
+CSL:
+  Formula: C7H8O
+  Long_name: Concentration of Cresols
+  MW_g: 108.14
+  Units: mol/mol
+Cl:
+  Formula: Cl
+  Long_name: Concentration of Atomic chlorine
+  MW_g: 35.45
+  Units: mol/mol
+Cl2:
+  Formula: Cl2
+  Long_name: Concentration of Molecular chlorine
+  MW_g: 70.9
+  Units: mol/mol
+Cl2O2:
+  Formula: Cl2O2
+  Long_name: Concentration of Dichlorine dioxide
+  MW_g: 102.91
+  Units: mol/mol
+ClNO2:
+  Formula: ClNO2
+  Long_name: Concentration of Nitryl chloride
+  MW_g: 81.45
+  Units: mol/mol
+ClNO3:
+  Formula: ClNO3
+  Long_name: Concentration of Chlorine nitrate
+  MW_g: 97.45
+  Units: mol/mol
+ClO:
+  Formula: ClO
+  Long_name: Concentration of Chlorine monoxide
+  MW_g: 51.45
+  Units: mol/mol
+ClOO:
+  Formula: ClOO
+  Long_name: Concentration of Chlorine dioxide
+  MW_g: 67.45
+  Units: mol/mol
+DMS:
+  Formula: (CH3)2S
+  Long_name: Concentration of Dimethyl sulfide
+  MW_g: 62.13
+  Units: mol/mol
+DST1:
+  Long_name: Concentration of Dust aerosol, Reff = 0.7 microns
+  MW_g: 29.0
+  Units: mol/mol
+DST2:
+  Long_name: Concentration of Dust aerosol, Reff = 1.4 microns
+  MW_g: 29.0
+  Units: mol/mol
+DST3:
+  Long_name: Concentration of Dust aerosol, Reff = 2.4 microns
+  MW_g: 29.0
+  Units: mol/mol
+DST4:
+  Long_name: Concentration of Dust aerosol, Reff = 4.5 microns
+  MW_g: 29.0
+  Units: mol/mol
+EOH:
+  Formula: C2H5OH
+  Long_name: Concentration of Ethanol
+  MW_g: 46.07
+  Units: mol/mol
+ETHLN:
+  Formula: CHOCH2ONO2
+  Long_name: Concentration of Ethanol nitrate
+  MW_g: 105.06
+  Units: mol/mol
+ETHN:
+  Formula: HOCH2CH2ONO2
+  Long_name: Concentration of hydroxy-nitrooxy-ethane
+  MW_g: 107.07
+  Units: mol/mol
+ETHP:
+  Formula: HOCH2CH2OOH
+  Long_name: Concentration of hydroxy-hydroperoxy-ethane
+  MW_g: 78.07
+  Units: mol/mol
+ETNO3:
+  Formula: C2H5ONO2
+  Long_name: Concentration of Ethyl nitrate
+  MW_g: 91.08
+  Units: mol/mol
+ETP:
+  Formula: CH3CH2OOH
+  Long_name: Concentration of Ethylhydroperoxide
+  MW_g: 62.08
+  Units: mol/mol
+FURA:
+  Formula: C4H4O
+  Long_name: Concentration of Furan
+  MW_g: 68.07
+  Units: mol/mol
+File_Index:
+  Long_name: File index of all plane.log files concatenated this data came from.
+GLYC:
+  Formula: HOCH2CHO
+  Long_name: Concentration of Glycoaldehyde
+  MW_g: 60.06
+  Units: mol/mol
+GLYX:
+  Formula: CHOCHO
+  Long_name: Concentration of Glyoxal
+  MW_g: 58.04
+  Units: mol/mol
+GMAO_ABSH:
+  Long_name: Absolute humidity
+  Units: unitless
+GMAO_AVGW:
+  Long_name: Water vapor mixing ratio
+  Units: mol/mol
+GMAO_IIEV:
+  Long_name: GEOS-Chem grid box Longitude index
+  Units: unitless
+GMAO_JJEV:
+  Long_name: GEOS-Chem grid box Latitude index
+  Units: unitless
+GMAO_LLEV:
+  Long_name: GEOS-Chem grid box index Level index
+  Units: unitless
+GMAO_PRES:
+  Long_name: Pressure at center of grid box
+  Units: hPa
+GMAO_PSFC:
+  Long_name: Surface pressure
+  Units: hPa
+GMAO_PSLV:
+  Long_name: Sea level pressure
+  Units: hPa
+GMAO_RELH:
+  Long_name: Relative humidity
+  Units: '%'
+GMAO_SURF:
+  Long_name: Aerosol surface area
+  Units: cm2/cm3
+GMAO_TEMP:
+  Long_name: Temperature
+  Units: K
+GMAO_THTA:
+  Long_name: Potential temperature
+  Units: K
+GMAO_UWND:
+  Long_name: Zonal winds
+  Units: m/s
+GMAO_VWND:
+  Long_name: Meridional winds
+  Units: m/s
+H1211:
+  Formula: CBrClF2
+  Long_name: Concentration of Halon 1211, Freon 12B1
+  MW_g: 165.36
+  Units: mol/mol
+H1301:
+  Formula: CBrF3
+  Long_name: Concentration of Halon 1301, Freon 13B1
+  MW_g: 148.91
+  Units: mol/mol
+H2402:
+  Formula: C2Br2F4
+  Long_name: Concentration of Halon 2402
+  MW_g: 259.82
+  Units: mol/mol
+H2O:
+  Formula: H2O
+  Long_name: Concentration of Water vapor
+  MW_g: 18.02
+  Units: mol/mol
+H2O2:
+  Formula: H2O2
+  Long_name: Concentration of Hydrogen peroxide
+  MW_g: 34.02
+  Units: mol/mol
+HAC:
+  Formula: HOCH2C(O)CH3
+  Long_name: Concentration of Hydroxyacetone
+  MW_g: 74.08
+  Units: mol/mol
+HBr:
+  Formula: HBr
+  Long_name: Concentration of Hypobromic acid
+  MW_g: 80.91
+  Units: mol/mol
+HC5A:
+  Formula: C5H8O2
+  Long_name: Concentration of isoprene-4,1-hydroxyaldehyde
+  MW_g: 100.13
+  Units: mol/mol
+HCFC123:
+  Formula: C2HCl2F3
+  Long_name: Concentration of HCFC-123, Freon 123
+  MW_g: 152.93
+  Units: mol/mol
+HCFC141b:
+  Formula: C(CH3)Cl2F
+  Long_name: Concentration of HCFC-141b, Freon 141b
+  MW_g: 116.94
+  Units: mol/mol
+HCFC142b:
+  Formula: C(CH3)ClF2
+  Long_name: Concentration of HCFC-142b, Freon 142b
+  MW_g: 100.5
+  Units: mol/mol
+HCFC22:
+  Formula: CHClF2
+  Long_name: Concentration of HCFC-22, Freon 22
+  MW_g: 86.47
+  Units: mol/mol
+HCOOH:
+  Formula: HCOOH
+  Long_name: Concentration of Formic acid
+  MW_g: 46.03
+  Units: mol/mol
+HCl:
+  Formula: HCl
+  Long_name: Concentration of Hydrochloric acid
+  MW_g: 36.45
+  Units: mol/mol
+HI:
+  Formula: HI
+  Long_name: Concentration of Hydrogen iodide
+  MW_g: 127.91
+  Units: mol/mol
+HMHP:
+  Formula: HOCH2OOH
+  Long_name: Concentration of Hydroxymethyl hydroperoxide
+  MW_g: 64.05
+  Units: mol/mol
+HMML:
+  Formula: C4H6O3
+  Long_name: Concentration of hydroxymethyl-methyl-a-lactone
+  MW_g: 102.1
+  Units: mol/mol
+HMS:
+  Formula: "HOCH2SO3\u2212"
+  Long_name: Concentration of Hydroxymethanesulfonate
+  MW_g: 111.1
+  Units: mol/mol
+HNO2:
+  Formula: HNO2
+  Long_name: Concentration of Nitrous acid
+  MW_g: 47.01
+  Units: mol/mol
+HNO3:
+  Formula: HNO3
+  Long_name: Concentration of Nitric acid
+  MW_g: 63.01
+  Units: mol/mol
+HNO4:
+  Formula: HNO4
+  Long_name: Concentration of Peroxynitric acid
+  MW_g: 79.01
+  Units: mol/mol
+HOBr:
+  Formula: HOBr
+  Long_name: Concentration of Hypobromous acid
+  MW_g: 96.91
+  Units: mol/mol
+HOCl:
+  Formula: HOCl
+  Long_name: Concentration of Hypochlorous acid
+  MW_g: 52.45
+  Units: mol/mol
+HOI:
+  Formula: HOI
+  Long_name: Concentration of Hypoiodous acid
+  MW_g: 143.89
+  Units: mol/mol
+HONIT:
+  Long_name: Concentration of 2nd gen monoterpene organic nitrate
+  MW_g: 215.0
+  Units: mol/mol
+HPALD1:
+  Formula: C5H8O3
+  Long_name: Concentration of d-4,1-C5-hydroperoxyaldehyde
+  MW_g: 116.13
+  Units: mol/mol
+HPALD2:
+  Formula: C5H8O3
+  Long_name: Concentration of d-1,4-C5-hydroperoxyaldehyde
+  MW_g: 116.13
+  Units: mol/mol
+HPALD3:
+  Formula: C5H8O3
+  Long_name: Concentration of b-2,1-C5-hydroperoxyaldehyde
+  MW_g: 116.13
+  Units: mol/mol
+HPALD4:
+  Formula: C5H8O3
+  Long_name: Concentration of b-3,4-C5-hydroperoxyaldehyde
+  MW_g: 116.13
+  Units: mol/mol
+HPETHNL:
+  Formula: HOOCH2CHO
+  Long_name: Concentration of Hydroperoxy ethanal
+  MW_g: 76.06
+  Units: mol/mol
+I:
+  Formula: I
+  Long_name: Concentration of Atomic iodine
+  MW_g: 126.9
+  Units: mol/mol
+I2:
+  Formula: I2
+  Long_name: Concentration of Molecular iodine
+  MW_g: 253.8
+  Units: mol/mol
+I2O2:
+  Formula: I2O2
+  Long_name: Concentration of Diiodine dioxide
+  MW_g: 285.8
+  Units: mol/mol
+I2O3:
+  Formula: I2O3
+  Long_name: Concentration of Diiodine trioxide
+  MW_g: 301.8
+  Units: mol/mol
+I2O4:
+  Formula: I2O4
+  Long_name: Concentration of Diiodine tetraoxide
+  MW_g: 317.8
+  Units: mol/mol
+IBr:
+  Formula: IBr
+  Long_name: Concentration of Iodine monobromide
+  MW_g: 206.9
+  Units: mol/mol
+ICHE:
+  Formula: C5H8O3
+  Long_name: Concentration of Isoprene hydroxy-carbonyl-epoxides
+  MW_g: 116.13
+  Units: mol/mol
+ICN:
+  Formula: C5H7NO4
+  Long_name: Concentration of Lumped isoprene carbonyl-nitrates
+  MW_g: 145.13
+  Units: mol/mol
+ICPDH:
+  Formula: C5H10O5
+  Long_name: Concentration of Isoprene dihydroxy hydroperoxycarbonyl
+  MW_g: 150.15
+  Units: mol/mol
+ICl:
+  Formula: ICl
+  Long_name: Concentration of Iodine monochloride
+  MW_g: 162.45
+  Units: mol/mol
+IDC:
+  Formula: C5H6O2
+  Long_name: Concentration of Lumped isoprene dicarbonyls
+  MW_g: 98.11
+  Units: mol/mol
+IDCHP:
+  Formula: C5H8O5
+  Long_name: Concentration of Isoprene dicarbonyl hydroxy dihydroperoxide
+  MW_g: 148.13
+  Units: mol/mol
+IDHDP:
+  Formula: C5H12O6
+  Long_name: Concentration of Isoprene dihydroxy dihydroperoxide
+  MW_g: 168.17
+  Units: mol/mol
+IDHPE:
+  Formula: C5H10O5
+  Long_name: Concentration of Isoprene dihydroxy hydroperoxy epoxide
+  MW_g: 150.15
+  Units: mol/mol
+IDN:
+  Formula: C5H8N2O6
+  Long_name: Concentration of Lumped isoprene dinitrates
+  MW_g: 192.15
+  Units: mol/mol
+IEPOXA:
+  Formula: C4H10O3
+  Long_name: Concentration of trans-Beta isoprene epoxydiol
+  MW_g: 106.14
+  Units: mol/mol
+IEPOXB:
+  Formula: C4H10O3
+  Long_name: Concentration of cis-Beta isoprene epoxydiol
+  MW_g: 106.14
+  Units: mol/mol
+IEPOXD:
+  Formula: C4H10O3
+  Long_name: Concentration of Delta isoprene epoxydiol
+  MW_g: 106.14
+  Units: mol/mol
+IHN1:
+  Formula: C5H9NO4
+  Long_name: Concentration of Isoprene-d-4,1-hydroxynitrate
+  MW_g: 147.15
+  Units: mol/mol
+IHN2:
+  Formula: C5H9NO4
+  Long_name: Concentration of Isoprene-b-1,2-hydroxynitrate
+  MW_g: 147.15
+  Units: mol/mol
+IHN3:
+  Formula: C5H9NO4
+  Long_name: Concentration of Isoprene-b-4,3-hydroxynitrate
+  MW_g: 147.15
+  Units: mol/mol
+IHN4:
+  Formula: C5H9NO4
+  Long_name: Concentration of Isoprene-d-4,1-hydroxynitrate
+  MW_g: 147.15
+  Units: mol/mol
+INDIOL:
+  Long_name: Concentration of Generic aerosol-phase organonitrate hydrolysis product
+  MW_g: 102.0
+  Units: mol/mol
+INO:
+  Formula: INO
+  Long_name: Concentration of Nitrosyl iodide
+  MW_g: 156.91
+  Units: mol/mol
+INPB:
+  Formula: C5H9NO5
+  Long_name: Concentration of Lumped b-hydroperoxy isoprene nitrates
+  MW_g: 163.15
+  Units: mol/mol
+INPD:
+  Formula: C5H9NO5
+  Long_name: Concentration of Lumped d-hydroperoxy isoprene nitrates
+  MW_g: 163.15
+  Units: mol/mol
+IO:
+  Formula: IO
+  Long_name: Concentration of Iodine monoxide
+  MW_g: 142.9
+  Units: mol/mol
+IONITA:
+  Long_name: Concentration of Aer-phase organic nitrate from isoprene precursors
+  MW_g: 14.01
+  Units: mol/mol
+IONO:
+  Formula: IONO
+  Long_name: Concentration of Nitryl iodide
+  MW_g: 172.91
+  Units: mol/mol
+IONO2:
+  Formula: IONO2
+  Long_name: Concentration of Iodine nitrate
+  MW_g: 188.91
+  Units: mol/mol
+IPRNO3:
+  Formula: C3H7ONO2
+  Long_name: Concentration of Isopropyl nitrate
+  MW_g: 105.11
+  Units: mol/mol
+ISALA:
+  Formula: I
+  Long_name: Concentration of Fine sea salt iodine
+  MW_g: 126.9
+  Units: mol/mol
+ISALC:
+  Formula: I
+  Long_name: Concentration of Coarse sea salt iodine
+  MW_g: 126.9
+  Units: mol/mol
+ISOP:
+  Formula: CH2=C(CH3)CH=CH2
+  Long_name: Concentration of Isoprene
+  MW_g: 68.13
+  Units: mol/mol
+ISOR_AH2O:
+  Long_name: ISORROPIA/HTEP aerosol water
+  Units: ug/m3 (air)
+ISOR_HPLUS:
+  Long_name: ISORROPIA/HTEP aerosol [H+]
+  Units: M
+ISOR_HSO4:
+  Long_name: ISORROPIA/HTEP bifulfate
+  Units: M
+ISOR_PH:
+  Long_name: 'ISORROPIA/HTEP pH (Note: In a non-ideal system, pH can be negative!)'
+  Units: unitless
+ITCN:
+  Formula: C5H9NO7
+  Long_name: Concentration of lumped isoprene tetrafunctional carbonylnitrates
+  MW_g: 195.15
+  Units: mol/mol
+ITHN:
+  Formula: C5H11NO7
+  Long_name: Concentration of Lumped isoprene tetrafunctional hydroxynitrates
+  MW_g: 197.17
+  Units: mol/mol
+I_IND:
+  Long_name: GEOS-Chem longitude index
+  Units: Unitless index
+J_IND:
+  Long_name: GEOS-Chem latitude index
+  Units: Unitless index
+LAT:
+  Long_name: Latitude (-90 to 90 degrees) for each flight track point
+  Units: degrees
+LIMO:
+  Formula: C10H16
+  Long_name: Concentration of Limonene
+  MW_g: 136.26
+  Units: mol/mol
+LON:
+  Long_name: Longitude (-180 to 180 degrees) for each flight track point
+  Units: degrees
+LVOC:
+  Formula: C5H14O5
+  Long_name: Concentration of Gas-phase low-volatility non-IEPOX product of RIP ox
+  MW_g: 154.19
+  Units: mol/mol
+LVOCOA:
+  Formula: C5H14O5
+  Long_name: Concentration of Aer-phase low-volatility non-IEPOX product of RIP ox
+  MW_g: 154.19
+  Units: mol/mol
+MACR:
+  Formula: CH2=C(CH3)CHO
+  Long_name: Concentration of Methacrolein
+  MW_g: 70.1
+  Units: mol/mol
+MACR1OOH:
+  Formula: CH2=C(CH3)C(O)OOH
+  Long_name: Concentration of Peracid from MACR
+  MW_g: 102.1
+  Units: mol/mol
+MAP:
+  Formula: CH3C(O)OOH
+  Long_name: Concentration of Peroxyacetic acid
+  MW_g: 76.06
+  Units: mol/mol
+MCRDH:
+  Formula: C4H8O3
+  Long_name: Concentration of Dihydroxy-methacrolein
+  MW_g: 104.12
+  Units: mol/mol
+MCRENOL:
+  Formula: C4H6O2
+  Long_name: Concentration of Lumped enols from MVK/MACR
+  MW_g: 86.1
+  Units: mol/mol
+MCRHN:
+  Formula: HOCH2C(ONO2)(CH3)CHO
+  Long_name: Concentration of Nitrate from MACR
+  MW_g: 149.11
+  Units: mol/mol
+MCRHNB:
+  Formula: O2NOCH2C(OH)(CH3)CHO
+  Long_name: Concentration of Nitrate from MACR
+  MW_g: 149.11
+  Units: mol/mol
+MCRHP:
+  Formula: HOCH2C(OOH)(CH3)CHO
+  Long_name: Concentration of Hydroxy-hydroperoxy-methacrolein
+  MW_g: 120.12
+  Units: mol/mol
+MCT:
+  Formula: C7H8O2
+  Long_name: Concentration of Catechols and methyl catechols
+  MW_g: 124.0
+  Units: mol/mol
+MEK:
+  Formula: RC(O)R
+  Long_name: Concentration of Methyl Ethyl Ketone
+  MW_g: 72.11
+  Units: mol/mol
+MENO3:
+  Formula: CH3ONO2
+  Long_name: Concentration of Methyl nitrate
+  MW_g: 77.05
+  Units: mol/mol
+MGLY:
+  Formula: CH3COCHO
+  Long_name: Concentration of Methylglyoxal
+  MW_g: 72.07
+  Units: mol/mol
+MOH:
+  Formula: CH3OH
+  Long_name: Concentration of Methanol
+  MW_g: 32.05
+  Units: mol/mol
+MONITA:
+  Long_name: Concentration of Aer-phase organic nitrate from monoterpene precursors
+  MW_g: 14.01
+  Units: mol/mol
+MONITS:
+  Formula: C10H17NO4
+  Long_name: Concentration of Saturated 1st gen monoterpene organic nitrate
+  MW_g: 215.28
+  Units: mol/mol
+MONITU:
+  Formula: C10H17NO4
+  Long_name: Concentration of Unsaturated 1st gen monoterpene organic nitrate
+  MW_g: 215.28
+  Units: mol/mol
+MP:
+  Formula: CH3OOH
+  Long_name: Concentration of Methyl hydro peroxide
+  MW_g: 48.05
+  Units: mol/mol
+MPAN:
+  Formula: CH2=C(CH3)C(O)OONO2
+  Long_name: Concentration of Peroxymethacroyl nitrate (PMN)
+  MW_g: 147.1
+  Units: mol/mol
+MPN:
+  Formula: CH3O2NO2
+  Long_name: Concentration of Methyl peroxy nitrate
+  MW_g: 93.05
+  Units: mol/mol
+MSA:
+  Formula: CH4SO3
+  Long_name: Concentration of Methyl sulfonic acid
+  MW_g: 96.1
+  Units: mol/mol
+MTPA:
+  Long_name: Concentration of a-pinene, b-pinene, sabinene, carene
+  MW_g: 136.26
+  Units: mol/mol
+MTPO:
+  Long_name: Concentration of Terpinene, terpinolene, myrcene, ocimene, other monoterpenes
+  MW_g: 136.26
+  Units: mol/mol
+MVK:
+  Formula: CH2=CHC(=O)CH3
+  Long_name: Concentration of Methyl vinyl ketone
+  MW_g: 70.09
+  Units: mol/mol
+MVKDH:
+  Formula: HOCH2CH2OHC(O)CH3
+  Long_name: Concentration of dihydroxy-MVK
+  MW_g: 105.13
+  Units: mol/mol
+MVKHC:
+  Formula: C4H6O3
+  Long_name: Concentration of MVK hydroxy-carbonyl
+  MW_g: 102.1
+  Units: mol/mol
+MVKHCB:
+  Formula: C4H6O3
+  Long_name: Concentration of MVK hydroxy-carbonyl
+  MW_g: 102.1
+  Units: mol/mol
+MVKHP:
+  Formula: C4H8O4
+  Long_name: Concentration of MVK hydroxy-hydroperoxide
+  MW_g: 120.12
+  Units: mol/mol
+MVKN:
+  Formula: HOCH2CH(ONO2)C(=O)CH3
+  Long_name: Concentration of Nitrate from MVK
+  MW_g: 149.12
+  Units: mol/mol
+MVKPC:
+  Formula: OCHCH(OOH)C(O)CH3
+  Long_name: Concentration of MVK hydroperoxy-carbonyl
+  MW_g: 118.1
+  Units: mol/mol
+N2O:
+  Formula: N2O
+  Long_name: Concentration of Nitrous oxide
+  MW_g: 44.02
+  Units: mol/mol
+N2O5:
+  Formula: N2O5
+  Long_name: Concentration of Dinitrogen pentoxide
+  MW_g: 108.02
+  Units: mol/mol
+NH3:
+  Formula: NH3
+  Long_name: Concentration of Ammonia
+  MW_g: 17.04
+  Units: mol/mol
+NH4:
+  Formula: NH4
+  Long_name: Concentration of Ammonium
+  MW_g: 18.05
+  Units: mol/mol
+NIT:
+  Long_name: Concentration of Inorganic nitrates
+  MW_g: 62.01
+  Units: mol/mol
+NITs:
+  Long_name: Concentration of Inorganic nitrates on surface of seasalt aerosol
+  MW_g: 31.4
+  Units: mol/mol
+'NO':
+  Formula: 'NO'
+  Long_name: Concentration of Nitrogen oxide
+  MW_g: 30.01
+  Units: mol/mol
+NO2:
+  Formula: NO2
+  Long_name: Concentration of Nitrogen dioxide
+  MW_g: 46.01
+  Units: mol/mol
+NO3:
+  Formula: NO3
+  Long_name: Concentration of Nitrate radical
+  MW_g: 62.01
+  Units: mol/mol
+NOy:
+  Long_name: Concentration of NOy family
+  Units: mol/mol
+NPHEN:
+  Formula: C6H5NO3
+  Long_name: Concentration of Nitrophenols
+  MW_g: 139.11
+  Units: mol/mol
+NPRNO3:
+  Formula: C3H7ONO2
+  Long_name: Concentration of n-propyl nitrate
+  MW_g: 105.11
+  Units: mol/mol
+O3:
+  Formula: O3
+  Long_name: Concentration of Ozone
+  MW_g: 48.0
+  Units: mol/mol
+OBS:
+  Long_name: Observation value from the flight campaign
+  Units: Same as entered in input file.
+OCPI:
+  Long_name: Concentration of Hydrophilic organic carbon aerosol
+  MW_g: 12.01
+  Units: mol/mol
+OCPO:
+  Long_name: Concentration of Hydrophobic organic carbon aerosol
+  MW_g: 12.01
+  Units: mol/mol
+OCS:
+  Formula: COS
+  Long_name: Concentration of Carbonyl sulfide
+  MW_g: 60.07
+  Units: mol/mol
+OClO:
+  Formula: OClO
+  Long_name: Concentration of Chlorine dioxide
+  MW_g: 67.45
+  Units: mol/mol
+OIO:
+  Formula: OIO
+  Long_name: Concentration of Iodine dioxide
+  MW_g: 158.9
+  Units: mol/mol
+PAN:
+  Formula: CH3C(O)OONO2
+  Long_name: Concentration of Peroxyacetyl nitrate
+  MW_g: 121.06
+  Units: mol/mol
+PHEN:
+  Formula: C6H6O
+  Long_name: Concentration of Phenol
+  MW_g: 94.11
+  Units: mol/mol
+PIP:
+  Formula: C10H18O3
+  Long_name: Concentration of Peroxide from MTPA
+  MW_g: 186.28
+  Units: mol/mol
+POINT:
+  Long_name: Flight track data point number (for reference)
+  Units: unitless index
+PP:
+  Formula: HOCH2CH(OOH)CH3
+  Long_name: Concentration of Peroxide from PO2
+  MW_g: 92.11
+  Units: mol/mol
+PPN:
+  Formula: CH3CH2C(O)OONO2
+  Long_name: Concentration of Lumped peroxypropionyl nitrate
+  MW_g: 135.08
+  Units: mol/mol
+PRESS:
+  Long_name: Pressure in hPa for each flight track point
+  Units: hPa
+PROPNN:
+  Formula: CH3C(=O)CH2ONO2
+  Long_name: Concentration of Propanone nitrate
+  MW_g: 119.08
+  Units: mol/mol
+PRPE:
+  Formula: C3H6
+  Long_name: Concentration of Lumped >= C3 alkenes
+  MW_g: 42.09
+  Units: mol/mol
+PRPN:
+  Formula: O2NOCH2CH(OOH)CH3
+  Long_name: Concentration of Peroxide from PRN1
+  MW_g: 137.11
+  Units: mol/mol
+PYAC:
+  Formula: C3H4O3
+  Long_name: Concentration of Pyruvic acid
+  MW_g: 88.07
+  Units: mol/mol
+P_I:
+  Long_name: GEOS-Chem level index
+  Units: Unitless index
+PlaneLog_File:
+  Long_name: Original path to raw plane.log file this data came from.
+R4N2:
+  Formula: RO2NO
+  Long_name: Concentration of Lumped alkyl nitrate
+  MW_g: 119.1
+  Units: mol/mol
+R4P:
+  Formula: CH3CH2CH2CH2OOH
+  Long_name: Concentration of Peroxide from R4O2
+  MW_g: 90.14
+  Units: mol/mol
+RA3P:
+  Formula: CH3CH2CH2OOH
+  Long_name: Concentration of Peroxide from A3O2
+  MW_g: 76.11
+  Units: mol/mol
+RB3P:
+  Formula: CH3CH(OOH)CH3
+  Long_name: Concentration of Peroxide from B3O2
+  MW_g: 76.11
+  Units: mol/mol
+RCHO:
+  Formula: CH3CH2CHO
+  Long_name: Concentration of Lumped aldehyde >= C3
+  MW_g: 58.09
+  Units: mol/mol
+RIPA:
+  Formula: C5H10O3
+  Long_name: Concentration of 1,2-ISOPOOH
+  MW_g: 118.15
+  Units: mol/mol
+RIPB:
+  Formula: C5H10O3
+  Long_name: Concentration of 4,3-ISOPOOH
+  MW_g: 118.15
+  Units: mol/mol
+RIPC:
+  Formula: C5H10O3
+  Long_name: Concentration of d-1,4-ISOPOOH
+  MW_g: 118.15
+  Units: mol/mol
+RIPD:
+  Formula: C5H10O3
+  Long_name: Concentration of d-4,1-ISOPOOH
+  MW_g: 118.15
+  Units: mol/mol
+RO2:
+  Long_name: Concentration of RO2 family
+  Units: mol/mol
+RP:
+  Formula: CH3CH2C(O)OOH
+  Long_name: Concentration of Peroxide from RCO3
+  MW_g: 90.09
+  Units: mol/mol
+SALA:
+  Long_name: Concentration of Fine (0.01-0.05 microns) sea salt aerosol
+  MW_g: 31.4
+  Units: mol/mol
+SALAAL:
+  Long_name: Concentration of Accumulation mode sea salt alkalinity
+  MW_g: 31.4
+  Units: mol/mol
+SALACL:
+  Long_name: Concentration of Chloride in Accumulation mode sea salt aerosol
+  MW_g: 35.45
+  Units: mol/mol
+SALC:
+  Long_name: Concentration of Coarse (0.5-8 microns) sea salt aerosol
+  MW_g: 31.4
+  Units: mol/mol
+SALCAL:
+  Long_name: Concentration of Coarse mode sea salt alkalinity
+  MW_g: 31.4
+  Units: mol/mol
+SALCCL:
+  Long_name: Concentration of Chloride in Coarse mode sea salt aerosol
+  MW_g: 35.45
+  Units: mol/mol
+SO2:
+  Formula: SO2
+  Long_name: Concentration of Sulfur dioxide
+  MW_g: 64.04
+  Units: mol/mol
+SO4:
+  Formula: SO4
+  Long_name: Concentration of Sulfate
+  MW_g: 96.06
+  Units: mol/mol
+SO4s:
+  Long_name: Concentration of Sulfate on surface of seasalt aerosol
+  MW_g: 31.4
+  Units: mol/mol
+SOAGX:
+  Formula: C2H2O2
+  Long_name: Concentration of Aerosol-phase glyoxal
+  MW_g: 58.04
+  Units: mol/mol
+SOAIE:
+  Formula: C5H10O3
+  Long_name: Concentration of Aerosol-phase IEPOX
+  MW_g: 118.15
+  Units: mol/mol
+SOAP:
+  Long_name: Concentration of SOA Precursor - lumped species for simplified SOA parameterization
+  MW_g: 150.0
+  Units: mol/mol
+SOAS:
+  Long_name: Concentration of SOA Simple - simplified non-volatile SOA parameterization
+  MW_g: 150.0
+  Units: mol/mol
+TIME_LT:
+  Long_name: Local time
+  Units: fractional hours
+TOLU:
+  Formula: C7H8
+  Long_name: Concentration of Toluene
+  MW_g: 92.15
+  Units: mol/mol
+TYPE:
+  Long_name: Aircraft/flight number ID or ground station ID. Same as input.
+  Units: unitless
+T_IND:
+  Long_name: Time index of output
+  Units: Unitless index
+XYLE:
+  Formula: C8H10
+  Long_name: Concentration of Xylene
+  MW_g: 106.18
+  Units: mol/mol
+pFe:
+  Formula: Fe
+  Long_name: Concentration of Anthropogenic iron
+  MW_g: 55.85
+  Units: mol/mol

@@ -22,6 +22,9 @@ from planeflight_utils import (_check_simtype, _read_planeflight_diags_yml, _dis
                                _convert_moleccm3_to_mr, _save_outputs)
 
 
+# Sentinel used to detect whether use_tracer_names was explicitly passed by the caller.
+_UNSET = object()
+
 # See example folder for usage examples...
 
 ###############################################################################
@@ -223,7 +226,7 @@ def make_planeflight_inputs(savedir: str,
                             simtype: str = '',
                             username: str = 'user',
                             overwrite: bool = False,
-                            use_tracer_names: bool = False):
+                            use_tracer_names=_UNSET):
     """Function to create planeflight.dat files in correct format for GEOS-Chem input.
 
     INPUT:
@@ -325,6 +328,13 @@ def make_planeflight_inputs(savedir: str,
     # -------------------------------------------------------------------------
     #                   Perform User Input Checks:
     # --------------------------------------------------------------------------
+
+    # Resolve use_tracer_names: track whether the caller set it explicitly, then
+    # apply the default (False). The sentinel lets the gc_config=None path warn
+    # only when the user actually asked for numbers, not when they hit the default.
+    _tracer_names_explicit = use_tracer_names is not _UNSET
+    if not _tracer_names_explicit:
+        use_tracer_names = False
 
     # Check that the output "savedir" directory exists:
     if not os.path.isdir(savedir):
@@ -434,13 +444,8 @@ def make_planeflight_inputs(savedir: str,
             tracers = [names2nums[name] for name in tracers]
 
     else:
-        # gc_config=None path: user must supply simtype and an explicit tracer list.
-        if not simtype:
-            raise ValueError(
-                "When gc_config=None, you must supply simtype= explicitly.\n"
-                "Valid options: 'fullchem', 'aerosol', 'carbon', 'Hg', 'POPs', "
-                "'tagO3', 'TransportTracers', 'metals', 'CH4', 'CO2', 'tagCO'.")
-        _check_simtype(simtype, blank_allowed=False)
+        # gc_config=None path: user must supply an explicit tracer list.
+        # simtype is only required if diags are also requested (validated below).
 
         # '?ALL?' requires the advected species list from gc_config — not possible here
         if isinstance(tracers, str):
@@ -459,8 +464,9 @@ def make_planeflight_inputs(savedir: str,
         if len(tracers_minus) > 0:
             tracers = [t for t in tracers if t not in list(tracers_minus)]
 
-        # Name→number mapping requires gc_config — warn and continue with names
-        if use_tracer_names is False:
+        # Name→number mapping requires gc_config. Only warn if the caller explicitly
+        # passed use_tracer_names=False; don't warn when it's just the default.
+        if use_tracer_names is False and _tracer_names_explicit:
             warnings.warn(
                 "use_tracer_names=False has no effect when gc_config=None — the name→number "
                 "mapping requires geoschem_config.yml. Tracer names will be used, so advected "
@@ -469,6 +475,16 @@ def make_planeflight_inputs(savedir: str,
                 UserWarning, stacklevel=2)
 
     if len(diags) > 0:  # If the has user asked to include specific optional diagnostics...
+
+        # simtype is required to look up compatible diagnostics. When gc_config is
+        # provided it was already set by _parse_gc_config above; when gc_config=None
+        # the user must supply it explicitly.
+        if not simtype:
+            raise ValueError(
+                "simtype= must be provided when requesting optional diagnostics without "
+                "gc_config.\nValid options: 'fullchem', 'aerosol', 'carbon', 'Hg', "
+                "'POPs', 'tagO3', 'TransportTracers', 'metals', 'CH4', 'CO2', 'tagCO'.")
+        _check_simtype(simtype, blank_allowed=False)
 
         # Get dictionary of ALL optional diagnostics compatiable with user's simtype.
         diag_dict = get_compatible_input_diags(simtype, display=False)
