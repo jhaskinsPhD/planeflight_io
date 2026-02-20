@@ -13,13 +13,9 @@ Created on Mon Sep  9 10:12:05 2024
 
 @author: u6044586
 """
-import sys 
-import pandas as pd 
-import numpy as np 
-import xarray as xr 
-
-# Add Jessica's library to make planeflight input files: 
-sys.path.append('/uufs/chpc.utah.edu/common/home/u6044586/python_scripts/modules/planeflight_io/')
+import pandas as pd
+import numpy as np
+import xarray as xr
 import planeflight_io as pln
 
 # Set path to WINTER merged 1 min campaign data: 

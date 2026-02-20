@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "planeflight-io"
+version = "1.0.0"
+description = "Tools to create and read GEOS-Chem planeflight diagnostic input/output files"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {file = "LICENSE"}
+dependencies = [
+    "numpy",
+    "pandas",
+    "xarray",
+    "pyyaml",
+]
+
+[tool.setuptools]
+py-modules = ["planeflight_io", "planeflight_utils"]

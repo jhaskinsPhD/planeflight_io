@@ -5,13 +5,9 @@ Created on Wed Oct 23 14:33:58 2024
 
 @author: u6044586
 """
-import sys
-import xarray as xr 
-import matplotlib.pyplot as plt 
-import numpy as np 
-
-# Add Jessica's library to make/read in planeflight input files: 
-sys.path.append('/uufs/chpc.utah.edu/common/home/u6044586/python_scripts/modules/planeflight_io/')
+import xarray as xr
+import matplotlib.pyplot as plt
+import numpy as np
 import planeflight_io as pln
 
 ################################################################################

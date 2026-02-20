@@ -7,17 +7,12 @@ Created on Fri Nov 19 10:40:31 2021
 import xarray as xr
 import pandas as pd
 import matplotlib.pyplot as plt
-import os 
-import sys 
+import os
 import numpy as np
-
-# Update 'path_to_this' to point to wherever you have put 'planeflight_io' on your computer.
-path_to_this= '/uufs/chpc.utah.edu/common/home/u6044586/python_scripts/modules/planeflight_io/'
-sys.path.insert(0, path_to_this)
 import planeflight_io as pln
 
-# Define path to examples folder: 
-path_to_examples= path_to_this+'/examples'
+# Set this to the path of the 'examples/' folder in your local clone of the planeflight_io repo.
+path_to_examples = '/path/to/planeflight_io/examples'  # <-- Update this!
 
 #==============================================================================
 # Step #0:  Visit Read-The-Docs to lear more about the Planeflight diagnostic: 

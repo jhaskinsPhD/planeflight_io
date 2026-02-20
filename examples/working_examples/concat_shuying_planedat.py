@@ -5,16 +5,12 @@ Created on Tue Sep 24 11:10:03 2024
 
 @author: u6044586
 """
-import os 
-import sys
-import numpy as np 
-import xarray as xr 
-import matplotlib.pyplot as plt 
+import os
+import numpy as np
+import xarray as xr
+import matplotlib.pyplot as plt
 import fnmatch
 from scipy.odr import ODR, Model, Data, RealData
-
-# Add Jessica's library to make/read in planeflight input files: 
-sys.path.append('/uufs/chpc.utah.edu/common/home/u6044586/python_scripts/modules/planeflight_io/')
 import planeflight_io as pln
 
 ###############################################################################
