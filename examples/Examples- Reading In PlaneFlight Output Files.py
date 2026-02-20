@@ -10,8 +10,7 @@ import matplotlib.pyplot as plt
 import os
 import planeflight_io as pln
 
-# Set this to the path of the 'examples/' folder in your local clone of the planeflight_io repo.
-path_to_examples = '/path/to/planeflight_io/examples'  # <-- Update this!
+path_to_examples = os.path.dirname(os.path.abspath(__file__))
 
 # =============================================================================
 # ############### Read in & Concatenate output plane.log files  #################
